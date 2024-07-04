@@ -12,6 +12,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   dynamic_color: ^1.7.0
   latlong2: ^0.9.0
+  flutter_clean_architecture: ^6.0.0
   flutter_map: ^7.0.1
   flutter_map_mbtiles: ^1.0.3
   mbtiles: ^0.4.2
