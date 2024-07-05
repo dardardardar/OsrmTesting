@@ -1,15 +1,16 @@
 import 'package:latlong2/latlong.dart';
-import 'package:osrmtesting/features/home/domain/entities/trees.dart';
+import 'package:osrmtesting/features/home/domain/entities/tree_marker.dart';
 
-class TreeModel extends TreeEntity {
-  const TreeModel({
+class TreeMarkerModel extends TreeMarkerEntity {
+  const TreeMarkerModel({
     int? id,
     LatLng? coordinate,
     String? name,
     int? type,
   });
 
-  factory TreeModel.fromJson(Map<String, dynamic> json) => TreeModel(
+  factory TreeMarkerModel.fromJson(Map<String, dynamic> json) =>
+      TreeMarkerModel(
         id: int.parse(json["id"] ?? '0'),
         coordinate: LatLng(double.parse(json["lat"] ?? '0'),
             double.parse(json["long"] ?? '0')),
