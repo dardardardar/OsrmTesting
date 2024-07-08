@@ -21,11 +21,9 @@ class _MapLayerApiService implements MapLayerApiService {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<List<TreeMarkerModel>>> getTreeMarkers(
-      {String? type}) async {
+  Future<HttpResponse<List<TreeMarkerModel>>> getTreeMarkers() async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'type': type};
-    queryParameters.removeWhere((k, v) => v == null);
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<List<dynamic>>(
@@ -36,7 +34,7 @@ class _MapLayerApiService implements MapLayerApiService {
     )
             .compose(
               _dio.options,
-              '/locations',
+              '/locations?type=1',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -45,10 +43,11 @@ class _MapLayerApiService implements MapLayerApiService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var _value = _result.data!
-        .map((dynamic i) => TreeMarkerModel.fromJson(i as Map<String, dynamic>))
-        .toList();
-    final httpResponse = HttpResponse(_value, _result);
+    List<TreeMarkerModel> list = [];
+    for (int i = 0; i < _result.data!.length; i++) {
+      list.add(TreeMarkerModel.fromJson(_result.data![i]));
+    }
+    final httpResponse = HttpResponse(list, _result);
     return httpResponse;
   }
 

@@ -10,8 +10,6 @@ part 'map_layer_api_services.g.dart';
 abstract class MapLayerApiService {
   factory MapLayerApiService(Dio dio) = _MapLayerApiService;
 
-  @GET('/locations')
-  Future<HttpResponse<List<TreeMarkerModel>>> getTreeMarkers({
-    @Query('type') String? type,
-  });
+  @GET('/locations?type=1')
+  Future<HttpResponse<List<TreeMarkerModel>>> getTreeMarkers();
 }

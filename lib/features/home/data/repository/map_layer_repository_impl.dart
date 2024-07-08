@@ -16,8 +16,7 @@ class MapLayerRepositoryImpl implements MapLayerRepository {
   @override
   Future<BaseState<List<TreeMarkerEntity>>> getTreeMarkers() async {
     try {
-      final httpResponse =
-          await _mapLayerApiService.getTreeMarkers(type: treeMarkersType);
+      final httpResponse = await _mapLayerApiService.getTreeMarkers();
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return SuccessState(httpResponse.data);
       } else {
