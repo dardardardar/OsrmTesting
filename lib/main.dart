@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:osrmtesting/features/home/presentation/cubit/map_layer/local/local_map_layer_cubit.dart';
+import 'package:osrmtesting/features/home/presentation/cubit/map_layer/local/local_map_layer_event.dart';
 import 'package:osrmtesting/features/home/presentation/cubit/map_layer/remote/remote_map_layer_cubit.dart';
 import 'package:osrmtesting/features/home/presentation/cubit/map_layer/remote/remote_map_layer_event.dart';
 import 'package:osrmtesting/features/home/presentation/pages/home_page.dart';
@@ -15,8 +17,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<RemoteMapLayerCubit>(
-      create: (_) => getIt()..add(const GetRemoteMapLayer()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<RemoteMapLayerCubit>(
+          create: (_) => getIt()..add(const GetRemoteMapLayer()),
+        ),
+        BlocProvider<LocalMapLayerCubit>(
+          create: (_) => getIt()..add(const GetLocalMapLayer()),
+        )
+      ],
       child: MaterialApp(
         theme: ThemeData(
           useMaterial3: true,

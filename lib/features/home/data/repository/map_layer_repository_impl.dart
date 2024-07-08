@@ -1,7 +1,8 @@
 import 'dart:io';
 
-import 'package:osrmtesting/core/const/const.dart';
+import 'package:mbtiles/mbtiles.dart';
 import 'package:osrmtesting/core/resources/base_state.dart';
+import 'package:osrmtesting/core/utils/helpers.dart';
 import 'package:osrmtesting/features/home/data/data_sources/remote/map_layer_api_services.dart';
 import 'package:dio/dio.dart';
 
@@ -20,13 +21,29 @@ class MapLayerRepositoryImpl implements MapLayerRepository {
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return SuccessState(httpResponse.data);
       } else {
-        return ErrorState(DioException(
+        return HttpErrorState(DioException(
             error: httpResponse.response.statusMessage,
             response: httpResponse.response,
             requestOptions: httpResponse.response.requestOptions));
       }
     } on DioException catch (e) {
-      return ErrorState(e);
+      return HttpErrorState(e);
+    }
+  }
+
+  @override
+  Future<BaseState<MbTiles>> getMapTiles() async {
+    try {
+      final file = await copyAssetToFile(
+        'assets/mbtiles/map.mbtiles',
+      );
+      if (file.existsSync()) {
+        return SuccessState(MbTiles(mbtilesPath: file.path));
+      } else {
+        return GeneralErrorState(Exception('Map data not avaliable'));
+      }
+    } on Exception catch (e) {
+      return GeneralErrorState(e);
     }
   }
 }

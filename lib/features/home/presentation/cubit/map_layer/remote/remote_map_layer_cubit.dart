@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:osrmtesting/core/resources/base_state.dart';
 import 'package:osrmtesting/features/home/domain/usecases/get_tree_markers.dart';
@@ -20,8 +22,8 @@ class RemoteMapLayerCubit
     if (remoteData is SuccessState && remoteData.data!.isNotEmpty) {
       emit(RemoteMapLayerSuccess(remoteData.data!));
     }
-    if (remoteData is ErrorState) {
-      emit(RemoteMapLayerError(remoteData.exception!));
+    if (remoteData is HttpClient) {
+      emit(RemoteMapLayerError(remoteData.dioException!));
     }
   }
 }

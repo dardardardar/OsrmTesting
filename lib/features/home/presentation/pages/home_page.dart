@@ -6,8 +6,8 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_mbtiles/flutter_map_mbtiles.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:mbtiles/mbtiles.dart';
-import 'package:osrmtesting/features/home/presentation/cubit/map_layer/remote/remote_map_layer_cubit.dart';
-import 'package:osrmtesting/features/home/presentation/cubit/map_layer/remote/remote_map_layer_state.dart';
+import 'package:osrmtesting/features/home/presentation/cubit/map_layer/local/local_map_layer_cubit.dart';
+import 'package:osrmtesting/features/home/presentation/cubit/map_layer/local/local_map_layer_state.dart';
 import 'package:osrmtesting/features/home/presentation/widgets/home_widget.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
@@ -47,9 +47,9 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text('flutter_map_mbtiles'),
       ),
-      body: BlocBuilder<RemoteMapLayerCubit, RemoteMapLayerState>(
+      body: BlocBuilder<LocalMapLayerCubit, LocalMapLayerState>(
         builder: (context, state) {
-          if (state is RemoteMapLayerLoading) {
+          if (state is LocalMapLayerLoading) {
             const SizedBox(
               height: double.infinity,
               child: Center(
@@ -57,56 +57,44 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             );
           }
-          if (state is RemoteMapLayerError) {
+          if (state is LocalMapLayerError) {
             SizedBox(
               height: double.infinity,
               child: Center(
-                child: Text(state.error!.message!),
+                child: Text(state.error.toString()),
               ),
             );
           }
-          if (state is RemoteMapLayerSuccess) {
-            FutureBuilder<MbTiles>(
-              future: _initMbtiles(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  _mbtiles = snapshot.data;
-                  final metadata = _mbtiles!.getMetadata();
-                  return Stack(
+          if (state is LocalMapLayerSuccess) {
+            _mbtiles = state.mbTiles!;
+            return Stack(
+              children: [
+                SizedBox(
+                  height: double.infinity,
+                  child: FlutterMap(
+                    options: MapOptions(
+                      onTap: (tapPosition, point) {
+                        if (kDebugMode) {
+                          print(point);
+                        }
+                      },
+                      minZoom: 16,
+                      maxZoom: 19.5,
+                      initialZoom: 17,
+                      initialCenter: const LatLng(-1.488226, 112.763424),
+                    ),
                     children: [
-                      SizedBox(
-                        height: double.infinity,
-                        child: FlutterMap(
-                          options: MapOptions(
-                            onTap: (tapPosition, point) {
-                              if (kDebugMode) {
-                                print(point);
-                              }
-                            },
-                            minZoom: 16,
-                            maxZoom: 19.5,
-                            initialZoom: 17,
-                            initialCenter: const LatLng(-1.488226, 112.763424),
-                          ),
-                          children: [
-                            TileLayer(
-                              tileProvider: MbTilesTileProvider(
-                                mbtiles: _mbtiles!,
-                                silenceTileNotFound: true,
-                              ),
-                            ),
-                          ],
+                      TileLayer(
+                        tileProvider: MbTilesTileProvider(
+                          mbtiles: _mbtiles!,
+                          silenceTileNotFound: true,
                         ),
                       ),
-                      debugPanel(metadata)
                     ],
-                  );
-                }
-                if (snapshot.hasError) {
-                  return Center(child: Text(snapshot.error.toString()));
-                }
-                return const Center(child: CircularProgressIndicator());
-              },
+                  ),
+                ),
+                debugPanel(_mbtiles!.getMetadata())
+              ],
             );
           }
           return const SizedBox(
