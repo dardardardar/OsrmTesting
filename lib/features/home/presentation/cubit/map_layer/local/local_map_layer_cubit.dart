@@ -17,7 +17,7 @@ class LocalMapLayerCubit extends Bloc<LocalMapLayerEvent, LocalMapLayerState> {
     final localData = await _getLocalMapLayer();
 
     if (localData is SuccessState) {
-      emit(LocalMapLayerSuccess(localData.data!));
+      emit(LocalMapLayerSuccess(mbtiles: localData.data!));
     }
     if (localData is GeneralErrorState) {
       emit(LocalMapLayerError(localData.exception!));
