@@ -13,7 +13,7 @@ class _MapLayerApiService implements MapLayerApiService {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://sinarmas.tvindo.net/wp-json/sinar/v1/bum';
+    baseUrl ??= 'https://testing.tvindo.net/wp-json/sinar/v1/bum';
   }
 
   final Dio _dio;
@@ -43,11 +43,10 @@ class _MapLayerApiService implements MapLayerApiService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    List<TreeMarkerModel> list = [];
-    for (int i = 0; i < _result.data!.length; i++) {
-      list.add(TreeMarkerModel.fromJson(_result.data![i]));
-    }
-    final httpResponse = HttpResponse(list, _result);
+    var _value = _result.data!
+        .map((dynamic i) => TreeMarkerModel.fromJson(i as Map<String, dynamic>))
+        .toList();
+    final httpResponse = HttpResponse(_value, _result);
     return httpResponse;
   }
 

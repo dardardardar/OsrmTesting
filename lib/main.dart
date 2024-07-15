@@ -8,6 +8,7 @@ import 'package:osrmtesting/features/home/presentation/pages/home_page.dart';
 import 'package:osrmtesting/get_it_container.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await initGetIt();
   runApp(const MyApp());
 }
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
           create: (_) => getIt()..add(const GetRemoteMapLayer()),
         ),
         BlocProvider<LocalMapLayerCubit>(
-          create: (_) => getIt()..add(const GetLocalMapLayer()),
+          create: (_) => getIt()..add(const GetMapTiles()),
         )
       ],
       child: MaterialApp(

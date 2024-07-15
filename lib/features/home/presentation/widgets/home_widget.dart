@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:mbtiles/mbtiles.dart';
 import 'package:osrmtesting/core/utils/functions.dart';
 import 'package:osrmtesting/features/home/domain/entities/tree_marker.dart';
@@ -28,7 +29,7 @@ Marker treeMarker(BuildContext context, {required TreeMarkerEntity tree}) {
   return Marker(
     width: sizeByScreenWidth(context: context, sizePercent: 0.25),
     height: sizeByScreenWidth(context: context, sizePercent: 0.21),
-    point: tree.coordinate!,
+    point: LatLng(tree.lat!, tree.long!),
     child: Stack(
       children: [
         Center(
