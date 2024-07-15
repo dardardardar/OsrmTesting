@@ -1,7 +1,7 @@
-import 'package:latlong2/latlong.dart';
 import 'package:mbtiles/mbtiles.dart';
 import 'package:osrmtesting/core/resources/base_state.dart';
 import 'package:osrmtesting/features/home/domain/entities/tree_marker.dart';
+import 'package:flutter_map_geojson/flutter_map_geojson.dart';
 
 abstract class MapLayerRepository {
   Future<BaseState<List<TreeMarkerEntity>>> getTreeMarkers();
@@ -9,5 +9,5 @@ abstract class MapLayerRepository {
   Future<void> purgeCachedTreeMarkers();
   Future<void> insertCachedTreeMarkers(List<TreeMarkerEntity> tree);
   Future<BaseState<MbTiles>> getMapTiles();
-  Future<BaseState<List<LatLng>>> getPolylines();
+  Future<BaseState<GeoJsonParser>> getGeoJson();
 }

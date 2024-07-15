@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:latlong2/latlong.dart';
+import 'package:flutter/services.dart';
 import 'package:mbtiles/mbtiles.dart';
 import 'package:osrmtesting/core/resources/base_state.dart';
 import 'package:osrmtesting/core/utils/functions.dart';
@@ -8,7 +8,7 @@ import 'package:osrmtesting/features/home/data/data_sources/local/database.dart'
 import 'package:osrmtesting/features/home/data/data_sources/remote/map_layer_api_services.dart';
 import 'package:dio/dio.dart';
 import 'package:osrmtesting/features/home/data/models/tree_marker.dart';
-
+import 'package:flutter_map_geojson/flutter_map_geojson.dart';
 import 'package:osrmtesting/features/home/domain/entities/tree_marker.dart';
 import 'package:osrmtesting/features/home/domain/repositories/map_layer_repository.dart';
 
@@ -52,18 +52,29 @@ class MapLayerRepositoryImpl implements MapLayerRepository {
   }
 
   @override
-  Future<BaseState<List<LatLng>>> getPolylines() async {
+  Future<BaseState<GeoJsonParser>> getGeoJson() async {
     try {
-      final file = await copyAssetToFile(
-        'assets/mbtiles/map1.mbtiles',
-      );
-      if (file.existsSync()) {
-        return SuccessState([]);
-      } else {
-        return GeneralErrorState(Exception('Map data not avaliable'));
-      }
+      final response =
+          await rootBundle.loadString('assets/geojson/Route.geojson');
+      final geoJson = GeoJsonParser();
+      geoJson.parseGeoJsonAsString(response);
+      return SuccessState(geoJson);
     } on Exception catch (e) {
       return GeneralErrorState(e);
+    }
+  }
+
+  Future<GeoJsonParser> getGeojson() async {
+    final file = await copyAssetToFile(
+      'assets/geojson/Route.geojson',
+    );
+    if (file.existsSync()) {
+      final str = await file.readAsString();
+      final geoJson = GeoJsonParser();
+      geoJson.parseGeoJsonAsString(str);
+      return geoJson;
+    } else {
+      return GeoJsonParser();
     }
   }
 

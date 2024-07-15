@@ -25,3 +25,7 @@ class LoadCachedMarkers extends LocalMapLayerEvent {
 class PurgeCachedMarkers extends LocalMapLayerEvent {
   const PurgeCachedMarkers();
 }
+
+class ParseGeoJson extends LocalMapLayerEvent {
+  const ParseGeoJson();
+}

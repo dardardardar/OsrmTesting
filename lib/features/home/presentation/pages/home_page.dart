@@ -21,7 +21,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   MbTiles? _mbtiles;
-
+  List<Polyline> _polylines = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,6 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
           }
           if (state is LocalMapLayerSuccess) {
             _mbtiles = state.mbTiles!;
+            _polylines = state.polylines!;
             return Stack(
               children: [
                 BlocBuilder<RemoteMapLayerCubit, RemoteMapLayerState>(
@@ -75,6 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               silenceTileNotFound: true,
                             ),
                           ),
+                          PolylineLayer(polylines: _polylines),
                           MarkerClusterLayerWidget(
                             options: MarkerClusterLayerOptions(
                               maxClusterRadius: 50,

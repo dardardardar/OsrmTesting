@@ -1,9 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:osrmtesting/core/resources/base_state.dart';
-import 'package:osrmtesting/features/home/domain/usecases/cache_markers.dart';
+import 'package:osrmtesting/features/home/domain/usecases/get_geojson.dart';
 import 'package:osrmtesting/features/home/domain/usecases/get_mbtiles.dart';
-import 'package:osrmtesting/features/home/domain/usecases/load_cached_markers.dart';
-import 'package:osrmtesting/features/home/domain/usecases/purge_cached_markers.dart';
+import 'package:osrmtesting/features/home/domain/usecases/get_tree_markers.dart';
 import 'package:osrmtesting/features/home/presentation/cubit/map_layer/local/local_map_layer_event.dart';
 import 'package:osrmtesting/features/home/presentation/cubit/map_layer/local/local_map_layer_state.dart';
 
@@ -12,9 +11,14 @@ class LocalMapLayerCubit extends Bloc<LocalMapLayerEvent, LocalMapLayerState> {
   final LoadCachedTreeMarkersUseCase _loadCachedTreeMarkers;
   final CacheTreeMarkersUseCase _cacheTreeMarkers;
   final PurgeCachedTreeMarkersUseCase _purgeCachedTreeMarkers;
+  final GetGeoJsonUseCase _geoJsonUseCase;
 
-  LocalMapLayerCubit(this._getLocalMapLayer, this._cacheTreeMarkers,
-      this._loadCachedTreeMarkers, this._purgeCachedTreeMarkers)
+  LocalMapLayerCubit(
+      this._getLocalMapLayer,
+      this._cacheTreeMarkers,
+      this._loadCachedTreeMarkers,
+      this._purgeCachedTreeMarkers,
+      this._geoJsonUseCase)
       : super(const LocalMapLayerLoading()) {
     on<GetMapTiles>(onLoadMapTiles);
     on<CacheMarkers>(onCacheTreeMarkers);
@@ -25,9 +29,10 @@ class LocalMapLayerCubit extends Bloc<LocalMapLayerEvent, LocalMapLayerState> {
   Future<void> onLoadMapTiles(
       GetMapTiles event, Emitter<LocalMapLayerState> emit) async {
     final localData = await _getLocalMapLayer();
-
+    final polylines = await _geoJsonUseCase();
     if (localData is SuccessState) {
-      emit(LocalMapLayerSuccess(mbtiles: localData.data!));
+      emit(LocalMapLayerSuccess(
+          mbtiles: localData.data!, polylines: polylines.data!.polylines));
     }
     if (localData is GeneralErrorState) {
       emit(LocalMapLayerError(localData.exception!));

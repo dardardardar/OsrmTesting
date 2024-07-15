@@ -4,11 +4,9 @@ import 'package:osrmtesting/features/home/data/data_sources/local/database.dart'
 import 'package:osrmtesting/features/home/data/data_sources/remote/map_layer_api_services.dart';
 import 'package:osrmtesting/features/home/data/repository/map_layer_repository_impl.dart';
 import 'package:osrmtesting/features/home/domain/repositories/map_layer_repository.dart';
-import 'package:osrmtesting/features/home/domain/usecases/cache_markers.dart';
+import 'package:osrmtesting/features/home/domain/usecases/get_geojson.dart';
 import 'package:osrmtesting/features/home/domain/usecases/get_mbtiles.dart';
 import 'package:osrmtesting/features/home/domain/usecases/get_tree_markers.dart';
-import 'package:osrmtesting/features/home/domain/usecases/load_cached_markers.dart';
-import 'package:osrmtesting/features/home/domain/usecases/purge_cached_markers.dart';
 import 'package:osrmtesting/features/home/presentation/cubit/map_layer/local/local_map_layer_cubit.dart';
 import 'package:osrmtesting/features/home/presentation/cubit/map_layer/remote/remote_map_layer_cubit.dart';
 
@@ -32,6 +30,7 @@ Future<void> initGetIt() async {
       LoadCachedTreeMarkersUseCase(getIt()));
   getIt.registerSingleton<PurgeCachedTreeMarkersUseCase>(
       PurgeCachedTreeMarkersUseCase(getIt()));
+  getIt.registerSingleton<GetGeoJsonUseCase>(GetGeoJsonUseCase(getIt()));
 
   getIt.registerFactory<RemoteMapLayerCubit>(
     () {
@@ -40,7 +39,7 @@ Future<void> initGetIt() async {
   );
   getIt.registerFactory<LocalMapLayerCubit>(
     () {
-      return LocalMapLayerCubit(getIt(), getIt(), getIt(), getIt());
+      return LocalMapLayerCubit(getIt(), getIt(), getIt(), getIt(), getIt());
     },
   );
 }
