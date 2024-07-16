@@ -76,7 +76,14 @@ class _MyHomePageState extends State<MyHomePage> {
                               silenceTileNotFound: true,
                             ),
                           ),
-                          PolylineLayer(polylines: _polylines),
+                          PolylineLayer(
+                              polylines: List.generate(_polylines.length, (i) {
+                            return Polyline(
+                                points: _polylines[i].points,
+                                color: Colors.purple,
+                                strokeWidth: 3,
+                                useStrokeWidthInMeter: true);
+                          })),
                           MarkerClusterLayerWidget(
                             options: MarkerClusterLayerOptions(
                               maxClusterRadius: 50,

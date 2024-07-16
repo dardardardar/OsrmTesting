@@ -96,7 +96,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `trees` (`id` INTEGER, `lat` REAL, `long` REAL, `name` TEXT, `type` INTEGER, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `trees` (`id` INTEGER, `lat` REAL, `long` REAL, `name` TEXT, `type` INTEGER, `updatedAt` TEXT, PRIMARY KEY (`id`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -123,7 +123,8 @@ class _$TreeMarkerDao extends TreeMarkerDao {
                   'lat': item.lat,
                   'long': item.long,
                   'name': item.name,
-                  'type': item.type
+                  'type': item.type,
+                  'updatedAt': item.updatedAt
                 }),
         _treeMarkerModelUpdateAdapter = UpdateAdapter(
             database,
@@ -134,7 +135,8 @@ class _$TreeMarkerDao extends TreeMarkerDao {
                   'lat': item.lat,
                   'long': item.long,
                   'name': item.name,
-                  'type': item.type
+                  'type': item.type,
+                  'updatedAt': item.updatedAt
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -155,12 +157,26 @@ class _$TreeMarkerDao extends TreeMarkerDao {
             lat: row['lat'] as double?,
             long: row['long'] as double?,
             name: row['name'] as String?,
-            type: row['type'] as int?));
+            type: row['type'] as int?,
+            updatedAt: row['updatedAt'] as String?));
   }
 
   @override
   Future<void> purgeTrees() async {
     await _queryAdapter.queryNoReturn('delete from trees');
+  }
+
+  @override
+  Future<TreeMarkerModel?> getSingleTree(String id) async {
+    return _queryAdapter.query('select * from trees where id = ?1',
+        mapper: (Map<String, Object?> row) => TreeMarkerModel(
+            id: row['id'] as int?,
+            lat: row['lat'] as double?,
+            long: row['long'] as double?,
+            name: row['name'] as String?,
+            type: row['type'] as int?,
+            updatedAt: row['updatedAt'] as String?),
+        arguments: [id]);
   }
 
   @override

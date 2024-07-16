@@ -6,11 +6,13 @@ class TreeMarkerEntity extends Equatable {
   final double? long;
   final String? name;
   final int? type;
+  final String? updatedAt;
 
-  const TreeMarkerEntity({this.id, this.lat, this.long, this.name, this.type});
+  const TreeMarkerEntity(
+      {this.id, this.lat, this.long, this.name, this.type, this.updatedAt});
 
   @override
   List<Object?> get props {
-    return [id, lat, long, name, type];
+    return [id, lat, long, name, type, updatedAt];
   }
 }

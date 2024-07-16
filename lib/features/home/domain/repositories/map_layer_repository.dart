@@ -7,7 +7,10 @@ abstract class MapLayerRepository {
   Future<BaseState<List<TreeMarkerEntity>>> getTreeMarkers();
   Future<List<TreeMarkerEntity>> fetchCachedTreeMarkers();
   Future<void> purgeCachedTreeMarkers();
-  Future<void> insertCachedTreeMarkers(List<TreeMarkerEntity> tree);
+  Future<void> cacheRemoteTreeMarkers(
+      {required List<TreeMarkerEntity> remote,
+      required List<TreeMarkerEntity> local});
   Future<BaseState<MbTiles>> getMapTiles();
   Future<BaseState<GeoJsonParser>> getGeoJson();
+  Future<bool> checkLocalData(TreeMarkerEntity remote);
 }

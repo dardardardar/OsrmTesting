@@ -8,11 +8,12 @@ abstract class BaseState<T> {
 }
 
 class SuccessState<T> extends BaseState<T> {
-  const SuccessState(T data) : super(data: data);
+  const SuccessState({required T data, String? message}) : super(data: data);
 }
 
 class HttpErrorState<T> extends BaseState<T> {
-  const HttpErrorState(DioException ex) : super(dioException: ex);
+  const HttpErrorState({required DioException ex, T? data})
+      : super(dioException: ex);
 }
 
 class GeneralErrorState<T> extends BaseState<T> {

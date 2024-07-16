@@ -22,16 +22,16 @@ class MapLayerRepositoryImpl implements MapLayerRepository {
   Future<BaseState<List<TreeMarkerEntity>>> getTreeMarkers() async {
     try {
       final httpResponse = await _mapLayerApiService.getTreeMarkers();
+      final data = await fetchCachedTreeMarkers();
       if (httpResponse.response.statusCode == HttpStatus.ok) {
-        return SuccessState(httpResponse.data);
-      } else {
-        return HttpErrorState(DioException(
-            error: httpResponse.response.statusMessage,
-            response: httpResponse.response,
-            requestOptions: httpResponse.response.requestOptions));
+        cacheRemoteTreeMarkers(remote: httpResponse.data, local: data);
+
+        return SuccessState(data: httpResponse.data);
       }
+      return SuccessState(data: data);
     } on DioException catch (e) {
-      return HttpErrorState(e);
+      final data = await fetchCachedTreeMarkers();
+      return SuccessState(data: data, message: e.message);
     }
   }
 
@@ -42,7 +42,7 @@ class MapLayerRepositoryImpl implements MapLayerRepository {
         'assets/mbtiles/map1.mbtiles',
       );
       if (file.existsSync()) {
-        return SuccessState(MbTiles(mbtilesPath: file.path));
+        return SuccessState(data: MbTiles(mbtilesPath: file.path));
       } else {
         return GeneralErrorState(Exception('Map data not avaliable'));
       }
@@ -58,23 +58,9 @@ class MapLayerRepositoryImpl implements MapLayerRepository {
           await rootBundle.loadString('assets/geojson/Route.geojson');
       final geoJson = GeoJsonParser();
       geoJson.parseGeoJsonAsString(response);
-      return SuccessState(geoJson);
+      return SuccessState(data: geoJson);
     } on Exception catch (e) {
       return GeneralErrorState(e);
-    }
-  }
-
-  Future<GeoJsonParser> getGeojson() async {
-    final file = await copyAssetToFile(
-      'assets/geojson/Route.geojson',
-    );
-    if (file.existsSync()) {
-      final str = await file.readAsString();
-      final geoJson = GeoJsonParser();
-      geoJson.parseGeoJsonAsString(str);
-      return geoJson;
-    } else {
-      return GeoJsonParser();
     }
   }
 
@@ -89,11 +75,30 @@ class MapLayerRepositoryImpl implements MapLayerRepository {
   }
 
   @override
-  Future<void> insertCachedTreeMarkers(List<TreeMarkerEntity> e) {
+  Future<void> cacheRemoteTreeMarkers(
+      {required List<TreeMarkerEntity> remote,
+      required List<TreeMarkerEntity> local}) {
     List<TreeMarkerModel> list = [];
-    for (var element in e) {
+
+    if (local.isNotEmpty) {
+      purgeCachedTreeMarkers();
+    }
+    for (var element in remote) {
       list.add(TreeMarkerModel.formEntity(element));
     }
+
     return _database.treesDao.insertTrees(list);
+  }
+
+  @override
+  Future<bool> checkLocalData(TreeMarkerEntity remote) async {
+    final local = await fetchCachedTreeMarkers();
+    if (local.isEmpty) {
+      return true;
+    }
+    if (remote.updatedAt != local.first.updatedAt) {
+      return true;
+    }
+    return false;
   }
 }

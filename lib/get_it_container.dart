@@ -24,12 +24,7 @@ Future<void> initGetIt() async {
   getIt
       .registerSingleton<GetTreeMarkersUseCase>(GetTreeMarkersUseCase(getIt()));
   getIt.registerSingleton<GetMapTilesUseCase>(GetMapTilesUseCase(getIt()));
-  getIt.registerSingleton<CacheTreeMarkersUseCase>(
-      CacheTreeMarkersUseCase(getIt()));
-  getIt.registerSingleton<LoadCachedTreeMarkersUseCase>(
-      LoadCachedTreeMarkersUseCase(getIt()));
-  getIt.registerSingleton<PurgeCachedTreeMarkersUseCase>(
-      PurgeCachedTreeMarkersUseCase(getIt()));
+
   getIt.registerSingleton<GetGeoJsonUseCase>(GetGeoJsonUseCase(getIt()));
 
   getIt.registerFactory<RemoteMapLayerCubit>(
@@ -39,7 +34,7 @@ Future<void> initGetIt() async {
   );
   getIt.registerFactory<LocalMapLayerCubit>(
     () {
-      return LocalMapLayerCubit(getIt(), getIt(), getIt(), getIt(), getIt());
+      return LocalMapLayerCubit(getIt(), getIt());
     },
   );
 }

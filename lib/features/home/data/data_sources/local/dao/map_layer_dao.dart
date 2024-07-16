@@ -11,4 +11,6 @@ abstract class TreeMarkerDao {
   Future<void> updateTrees(TreeMarkerModel trees);
   @Query('delete from trees')
   Future<void> purgeTrees();
+  @Query('select * from trees where id = :id')
+  Future<TreeMarkerModel?> getSingleTree(String id);
 }
