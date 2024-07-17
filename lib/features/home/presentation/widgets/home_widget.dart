@@ -30,16 +30,53 @@ Marker treeMarker(BuildContext context, {required TreeMarkerEntity tree}) {
     width: sizeByScreenWidth(context: context, sizePercent: 0.25),
     height: sizeByScreenWidth(context: context, sizePercent: 0.21),
     point: LatLng(tree.lat!, tree.long!),
-    child: Stack(
-      children: [
-        Center(
-          child: Container(
-            padding: const EdgeInsets.all(8),
+    child: GestureDetector(
+      onLongPress: () {
+        print(tree.name);
+        showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              padding: EdgeInsets.fromLTRB(8, 32, 8, 8),
+              width: double.infinity,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [Text(tree.name!)],
+              ),
+            );
+          },
+        );
+      },
+      child: Stack(
+        children: [
+          Center(
             child: Container(
-              padding: const EdgeInsets.all(1),
-              decoration: const ShapeDecoration(
-                  shape: CircleBorder(),
-                  shadows: [
+              padding: const EdgeInsets.all(8),
+              child: Container(
+                padding: const EdgeInsets.all(1),
+                decoration: const ShapeDecoration(
+                    shape: CircleBorder(),
+                    shadows: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        spreadRadius: 3,
+                        blurRadius: 7,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
+                    color: Colors.white),
+                child: Image.asset('assets/icons/go-harvest-assets.png',
+                    height: 24),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  boxShadow: const [
                     BoxShadow(
                       color: Colors.black12,
                       spreadRadius: 3,
@@ -47,34 +84,15 @@ Marker treeMarker(BuildContext context, {required TreeMarkerEntity tree}) {
                       offset: Offset(0, 3), // changes position of shadow
                     ),
                   ],
-                  color: Colors.white),
-              child:
-                  Image.asset('assets/icons/go-harvest-assets.png', height: 24),
+                  color: Colors.green.shade100),
+              child: Text(
+                tree.name!,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-          ),
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            padding: const EdgeInsets.all(4),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black12,
-                    spreadRadius: 3,
-                    blurRadius: 7,
-                    offset: Offset(0, 3), // changes position of shadow
-                  ),
-                ],
-                color: Colors.green.shade100),
-            child: Text(
-              tree.name!,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     ),
   );
 }

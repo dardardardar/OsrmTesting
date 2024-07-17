@@ -13,7 +13,7 @@ class _MapLayerApiService implements MapLayerApiService {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://testing.tvindo.net/wp-json/sinar/v1/bum';
+    baseUrl ??= 'https://sinarmas.tvindo.net/wp-json/sinar/v1/bum';
   }
 
   final Dio _dio;
