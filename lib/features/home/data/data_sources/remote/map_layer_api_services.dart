@@ -12,4 +12,5 @@ abstract class MapLayerApiService {
 
   @GET('/locations?type=1')
   Future<HttpResponse<List<TreeMarkerModel>>> getTreeMarkers();
+
 }

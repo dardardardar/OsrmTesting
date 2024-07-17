@@ -121,7 +121,165 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   );
                 }),
-                debugPanel(_mbtiles!.getMetadata())
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(children: [
+                    debugPanel(_mbtiles!.getMetadata()),
+                    Spacer(),
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.white
+                      ),
+                      child:  Column(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(Icons.circle),
+                                    SizedBox(width: 8,),
+                                    Text('Detail Pokok'),
+                                  ],
+                                ),
+                                Spacer(),
+                                Row(
+                                  children: [
+                                    Icon(Icons.info_outline),
+                                    SizedBox(width: 8,),
+                                    Text('Siap Panen'),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: Column(
+                                    children: [
+                                      Text('Pokok'),
+                                      SizedBox(height: 2,),
+                                      Text('data')
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(width:24,),
+                                Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: Column(
+                                    children: [
+                                      Text('Blok'),
+                                      SizedBox(height: 2,),
+                                      Text('data')
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(width:24,),
+                                Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: Column(
+                                    children: [
+                                      Text('Baris'),
+                                      SizedBox(height: 2,),
+                                      Text('data')
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(width:24,),
+                                Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: Column(
+                                    children: [
+                                      Text('Ancak'),
+                                      SizedBox(height: 2,),
+                                      Text('data')
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(width:24,),
+                                Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: Column(
+                                    children: [
+                                      Text('Afdeling'),
+                                      SizedBox(height: 2,),
+                                      Text('data')
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    InkWell(
+                                      onTap: (){},
+                                      child: Container(
+                                        decoration: ShapeDecoration(
+                                          shape: CircleBorder(side: BorderSide(
+                                              width: 1,
+                                              color: Colors.green
+                                          )),
+
+                                        ),
+                                        child: Icon(Icons.remove,color: Colors.green,),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text('0'),
+                                    ),
+                                    InkWell(
+                                      onTap: (){},
+                                      child: Container(
+                                        decoration: ShapeDecoration(
+                                          shape: CircleBorder(side: BorderSide(
+                                              width: 1,
+                                              color: Colors.green
+                                          )),
+
+                                        ),
+                                        child: Icon(Icons.add,color: Colors.green,),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Spacer(),
+                                InkWell(
+                                  onTap: (){},
+                                  child: Container(
+                                    padding: const EdgeInsets.all(12),
+                                    decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Text('Panen'),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+
+                        ],
+                      ),
+                    )
+                  ],),
+                ),
+
               ],
             );
           }

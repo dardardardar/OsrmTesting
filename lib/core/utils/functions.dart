@@ -24,3 +24,4 @@ double sizeByScreenWidth(
   }
   return MediaQuery.of(context).size.width * sizePercent;
 }
+

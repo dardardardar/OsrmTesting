@@ -25,13 +25,14 @@ class MapLayerRepositoryImpl implements MapLayerRepository {
       final data = await fetchCachedTreeMarkers();
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         cacheRemoteTreeMarkers(remote: httpResponse.data, local: data);
-
         return SuccessState(data: httpResponse.data);
       }
       return SuccessState(data: data);
     } on DioException catch (e) {
       final data = await fetchCachedTreeMarkers();
       return SuccessState(data: data, message: e.message);
+    } on Exception catch (e){
+      return GeneralErrorState(e);
     }
   }
 
