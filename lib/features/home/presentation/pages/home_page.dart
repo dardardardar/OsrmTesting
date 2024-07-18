@@ -3,14 +3,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:flutter_map_mbtiles/flutter_map_mbtiles.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:mbtiles/mbtiles.dart';
+import 'package:osrmtesting/core/const/colors.dart';
+import 'package:osrmtesting/core/const/icons.dart';
+import 'package:osrmtesting/core/utils/functions.dart';
 import 'package:osrmtesting/features/home/presentation/cubit/map_layer/local/local_map_layer_cubit.dart';
 import 'package:osrmtesting/features/home/presentation/cubit/map_layer/local/local_map_layer_state.dart';
 import 'package:osrmtesting/features/home/presentation/cubit/map_layer/remote/remote_map_layer_cubit.dart';
 import 'package:osrmtesting/features/home/presentation/cubit/map_layer/remote/remote_map_layer_state.dart';
 import 'package:osrmtesting/features/home/presentation/widgets/home_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:restart_app/restart_app.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -123,163 +128,237 @@ class _MyHomePageState extends State<MyHomePage> {
                 }),
                 Padding(
                   padding: const EdgeInsets.all(16),
-                  child: Column(children: [
-                    debugPanel(_mbtiles!.getMetadata()),
-                    Spacer(),
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: 8),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: Colors.white
-                      ),
-                      child:  Column(
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Row(
-                                  children: [
-                                    Icon(Icons.circle),
-                                    SizedBox(width: 8,),
-                                    Text('Detail Pokok'),
-                                  ],
-                                ),
-                                Spacer(),
-                                Row(
-                                  children: [
-                                    Icon(Icons.info_outline),
-                                    SizedBox(width: 8,),
-                                    Text('Siap Panen'),
-                                  ],
-                                ),
-                              ],
+                  child: Column(
+                    children: [
+                      debugPanel(_mbtiles!.getMetadata()),
+                      const Spacer(),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 8),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.black12,
+                                spreadRadius: 1,
+                                blurRadius: 10,
+                                offset: Offset(0, 5),
+                              )
+                            ],
+                            color: Colors.white),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        CustomIcons.Tree,
+                                      ),
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      Text('Detail Pokok'),
+                                    ],
+                                  ),
+                                  Spacer(),
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        CustomIcons.Info,
+                                      ),
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      Text('Siap Panen'),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.all(8),
-                                  child: Column(
-                                    children: [
-                                      Text('Pokok'),
-                                      SizedBox(height: 2,),
-                                      Text('data')
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(width:24,),
-                                Padding(
-                                  padding: EdgeInsets.all(8),
-                                  child: Column(
-                                    children: [
-                                      Text('Blok'),
-                                      SizedBox(height: 2,),
-                                      Text('data')
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(width:24,),
-                                Padding(
-                                  padding: EdgeInsets.all(8),
-                                  child: Column(
-                                    children: [
-                                      Text('Baris'),
-                                      SizedBox(height: 2,),
-                                      Text('data')
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(width:24,),
-                                Padding(
-                                  padding: EdgeInsets.all(8),
-                                  child: Column(
-                                    children: [
-                                      Text('Ancak'),
-                                      SizedBox(height: 2,),
-                                      Text('data')
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(width:24,),
-                                Padding(
-                                  padding: EdgeInsets.all(8),
-                                  child: Column(
-                                    children: [
-                                      Text('Afdeling'),
-                                      SizedBox(height: 2,),
-                                      Text('data')
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    InkWell(
-                                      onTap: (){},
-                                      child: Container(
-                                        decoration: ShapeDecoration(
-                                          shape: CircleBorder(side: BorderSide(
-                                              width: 1,
-                                              color: Colors.green
-                                          )),
-
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.all(8),
+                                    child: Column(
+                                      children: [
+                                        Text('Pokok'),
+                                        SizedBox(
+                                          height: 2,
                                         ),
-                                        child: Icon(Icons.remove,color: Colors.green,),
+                                        Text('data')
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 24,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(8),
+                                    child: Column(
+                                      children: [
+                                        Text('Blok'),
+                                        SizedBox(
+                                          height: 2,
+                                        ),
+                                        Text('data')
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 24,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(8),
+                                    child: Column(
+                                      children: [
+                                        Text('Baris'),
+                                        SizedBox(
+                                          height: 2,
+                                        ),
+                                        Text('data')
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 24,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(8),
+                                    child: Column(
+                                      children: [
+                                        Text('Ancak'),
+                                        SizedBox(
+                                          height: 2,
+                                        ),
+                                        Text('data')
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 24,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(8),
+                                    child: Column(
+                                      children: [
+                                        Text('Afdeling'),
+                                        SizedBox(
+                                          height: 2,
+                                        ),
+                                        Text('data')
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        // InkWell(
+                                        //   onTap: () {},
+                                        //   child: Container(
+                                        //     padding: EdgeInsets.all(8),
+                                        //     decoration: ShapeDecoration(
+                                        //       shape: CircleBorder(
+                                        //           side: BorderSide(
+                                        //               width: 1,
+                                        //               color: Colors.green)),
+                                        //     ),
+                                        //     child: SvgPicture.asset(
+                                        //         CustomIcons.Minus),
+                                        //   ),
+                                        // ),
+                                        OutlinedButton(
+                                          onPressed: () =>
+                                              print("it's pressed"),
+                                          style: OutlinedButton.styleFrom(
+                                            overlayColor: Colors.green,
+                                            side: BorderSide(
+                                                width: 1.5,
+                                                color: primaryColor),
+                                            shape: CircleBorder(),
+                                          ),
+                                          child: SvgPicture.asset(
+                                              CustomIcons.Minus,
+                                              colorFilter: ColorFilter.mode(
+                                                  primaryColor,
+                                                  BlendMode.srcIn)),
+                                        ),
+                                        SizedBox(
+                                          width: 48,
+                                          child: TextField(
+                                            textAlign: TextAlign.center,
+                                            decoration: InputDecoration(
+                                              border: OutlineInputBorder(
+                                                  borderSide: BorderSide.none),
+                                              hintText: '0',
+                                            ),
+                                          ),
+                                        ),
+                                        OutlinedButton(
+                                          onPressed: () =>
+                                              print("it's pressed"),
+                                          style: OutlinedButton.styleFrom(
+                                            overlayColor: Colors.green,
+                                            side: BorderSide(
+                                                width: 1.5,
+                                                color: primaryColor),
+                                            shape: CircleBorder(),
+                                          ),
+                                          child: SvgPicture.asset(
+                                              CustomIcons.Plus,
+                                              colorFilter: ColorFilter.mode(
+                                                  primaryColor,
+                                                  BlendMode.srcIn)),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: InkWell(
+                                      onTap: () {},
+                                      child: Container(
+                                        padding: const EdgeInsets.all(12),
+                                        decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SvgPicture.asset(CustomIcons.Info),
+                                            SizedBox(
+                                              width: 8,
+                                            ),
+                                            Text('Panen'),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text('0'),
-                                    ),
-                                    InkWell(
-                                      onTap: (){},
-                                      child: Container(
-                                        decoration: ShapeDecoration(
-                                          shape: CircleBorder(side: BorderSide(
-                                              width: 1,
-                                              color: Colors.green
-                                          )),
-
-                                        ),
-                                        child: Icon(Icons.add,color: Colors.green,),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Spacer(),
-                                InkWell(
-                                  onTap: (){},
-                                  child: Container(
-                                    padding: const EdgeInsets.all(12),
-                                    decoration: BoxDecoration(
-                                      color: Colors.green,
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Text('Panen'),
-                                  ),
-                                )
-                              ],
-                            ),
-                          )
-
-                        ],
-                      ),
-                    )
-                  ],),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-
               ],
             );
           }

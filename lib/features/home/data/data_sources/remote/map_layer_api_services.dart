@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:osrmtesting/core/const/const.dart';
+import 'package:osrmtesting/core/const/strings.dart';
 import 'package:osrmtesting/features/home/data/models/tree_marker.dart';
 
 import 'package:retrofit/retrofit.dart';
@@ -12,5 +12,4 @@ abstract class MapLayerApiService {
 
   @GET('/locations?type=1')
   Future<HttpResponse<List<TreeMarkerModel>>> getTreeMarkers();
-
 }

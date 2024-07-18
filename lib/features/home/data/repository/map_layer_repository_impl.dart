@@ -31,7 +31,7 @@ class MapLayerRepositoryImpl implements MapLayerRepository {
     } on DioException catch (e) {
       final data = await fetchCachedTreeMarkers();
       return SuccessState(data: data, message: e.message);
-    } on Exception catch (e){
+    } on Exception catch (e) {
       return GeneralErrorState(e);
     }
   }

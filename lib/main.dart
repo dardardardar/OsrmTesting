@@ -10,6 +10,7 @@ import 'package:osrmtesting/get_it_container.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initGetIt();
+  Future.delayed(const Duration(milliseconds: 200));
   runApp(const MyApp());
 }
 
