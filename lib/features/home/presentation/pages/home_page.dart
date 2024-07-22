@@ -6,16 +6,15 @@ import 'package:flutter_map_mbtiles/flutter_map_mbtiles.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:mbtiles/mbtiles.dart';
-import 'package:osrmtesting/core/const/colors.dart';
-import 'package:osrmtesting/core/const/icons.dart';
+import 'package:osrmtesting/core/theme/theme.dart';
 import 'package:osrmtesting/core/utils/functions.dart';
+import 'package:osrmtesting/core/widgets/customx_widgets.dart';
 import 'package:osrmtesting/features/home/presentation/cubit/map_layer/local/local_map_layer_cubit.dart';
 import 'package:osrmtesting/features/home/presentation/cubit/map_layer/local/local_map_layer_state.dart';
 import 'package:osrmtesting/features/home/presentation/cubit/map_layer/remote/remote_map_layer_cubit.dart';
 import 'package:osrmtesting/features/home/presentation/cubit/map_layer/remote/remote_map_layer_state.dart';
 import 'package:osrmtesting/features/home/presentation/widgets/home_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:restart_app/restart_app.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -27,11 +26,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   MbTiles? _mbtiles;
   List<Polyline> _polylines = [];
+  List<bool> isVisible = [];
+  List<double> size = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('MbTiles test (Clean Architecture)'),
+        title: const Text('Panen'),
       ),
       body: BlocBuilder<LocalMapLayerCubit, LocalMapLayerState>(
         builder: (context, state) {
@@ -97,7 +98,86 @@ class _MyHomePageState extends State<MyHomePage> {
                               padding: const EdgeInsets.all(50),
                               maxZoom: 15,
                               markers: List.generate(markers.length, (i) {
-                                return treeMarker(context, tree: markers[i]);
+                                isVisible.add(false);
+                                size.add(30);
+                                return Marker(
+                                  width: size[i],
+                                  point:
+                                      LatLng(markers[i].lat!, markers[i].long!),
+                                  child: GestureDetector(
+                                    onLongPress: () {
+                                      setState(() {
+                                        isVisible[i] = !isVisible[i];
+                                        size[i] = isVisible[i] ? 45 : 30;
+                                      });
+                                    },
+                                    child: Stack(
+                                      children: [
+                                        Center(
+                                          child: Container(
+                                            padding: padding8,
+                                            child: Container(
+                                              decoration: const ShapeDecoration(
+                                                  shape: CircleBorder(),
+                                                  shadows: [
+                                                    BoxShadow(
+                                                      color: Colors.black12,
+                                                      spreadRadius: 3,
+                                                      blurRadius: 7,
+                                                      offset: Offset(0,
+                                                          3), // changes position of shadow
+                                                    ),
+                                                  ],
+                                                  color: Colors.white),
+                                              child: Image.asset(
+                                                  'assets/icons/go-harvest-assets.png',
+                                                  height: 24),
+                                            ),
+                                          ),
+                                        ),
+                                        Visibility(
+                                          visible: false,
+                                          child: Align(
+                                            alignment: Alignment.bottomCenter,
+                                            child: Container(
+                                              padding: padding4,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(6),
+                                                  boxShadow: const [
+                                                    BoxShadow(
+                                                      color: Colors.black12,
+                                                      spreadRadius: 3,
+                                                      blurRadius: 7,
+                                                      offset: Offset(0,
+                                                          3), // changes position of shadow
+                                                    ),
+                                                  ],
+                                                  color: Colors.green.shade100),
+                                              child: AnimatedSwitcher(
+                                                duration: const Duration(
+                                                    milliseconds: 500),
+                                                transitionBuilder:
+                                                    (Widget child,
+                                                        Animation<double>
+                                                            animation) {
+                                                  return ScaleTransition(
+                                                      scale: animation,
+                                                      child: child);
+                                                },
+                                                child: Text(
+                                                  markers[i].name!,
+                                                  key: ValueKey<String>(
+                                                      markers[i].name!),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
                               }),
                               builder: (context, markers) {
                                 return Container(
@@ -127,13 +207,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   );
                 }),
                 Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: padding16,
                   child: Column(
                     children: [
                       debugPanel(_mbtiles!.getMetadata()),
                       const Spacer(),
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: 8),
+                        padding: padding8,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
                             boxShadow: const [
@@ -148,13 +228,13 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: Column(
                           children: [
                             Padding(
-                              padding: EdgeInsets.all(8.0),
+                              padding: padding8,
                               child: Row(
                                 children: [
                                   Row(
                                     children: [
                                       SvgPicture.asset(
-                                        CustomIcons.Tree,
+                                        CxIcons.tree,
                                       ),
                                       SizedBox(
                                         width: 8,
@@ -166,7 +246,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   Row(
                                     children: [
                                       SvgPicture.asset(
-                                        CustomIcons.Info,
+                                        CxIcons.info,
                                       ),
                                       SizedBox(
                                         width: 8,
@@ -177,13 +257,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ],
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                            const Padding(
+                              padding: padding8,
+                              child: Wrap(
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.all(8),
+                                    padding: padding8,
                                     child: Column(
                                       children: [
                                         Text('Pokok'),
@@ -198,7 +277,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     width: 24,
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.all(8),
+                                    padding: padding8,
                                     child: Column(
                                       children: [
                                         Text('Blok'),
@@ -213,7 +292,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     width: 24,
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.all(8),
+                                    padding: padding8,
                                     child: Column(
                                       children: [
                                         Text('Baris'),
@@ -228,7 +307,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     width: 24,
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.all(8),
+                                    padding: padding8,
                                     child: Column(
                                       children: [
                                         Text('Ancak'),
@@ -243,7 +322,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     width: 24,
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.all(8),
+                                    padding: padding8,
                                     child: Column(
                                       children: [
                                         Text('Afdeling'),
@@ -258,98 +337,21 @@ class _MyHomePageState extends State<MyHomePage> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: padding8,
                               child: Row(
                                 children: [
-                                  Expanded(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        // InkWell(
-                                        //   onTap: () {},
-                                        //   child: Container(
-                                        //     padding: EdgeInsets.all(8),
-                                        //     decoration: ShapeDecoration(
-                                        //       shape: CircleBorder(
-                                        //           side: BorderSide(
-                                        //               width: 1,
-                                        //               color: Colors.green)),
-                                        //     ),
-                                        //     child: SvgPicture.asset(
-                                        //         CustomIcons.Minus),
-                                        //   ),
-                                        // ),
-                                        OutlinedButton(
-                                          onPressed: () =>
-                                              print("it's pressed"),
-                                          style: OutlinedButton.styleFrom(
-                                            overlayColor: Colors.green,
-                                            side: BorderSide(
-                                                width: 1.5,
-                                                color: primaryColor),
-                                            shape: CircleBorder(),
-                                          ),
-                                          child: SvgPicture.asset(
-                                              CustomIcons.Minus,
-                                              colorFilter: ColorFilter.mode(
-                                                  primaryColor,
-                                                  BlendMode.srcIn)),
-                                        ),
-                                        SizedBox(
-                                          width: 48,
-                                          child: TextField(
-                                            textAlign: TextAlign.center,
-                                            decoration: InputDecoration(
-                                              border: OutlineInputBorder(
-                                                  borderSide: BorderSide.none),
-                                              hintText: '0',
-                                            ),
-                                          ),
-                                        ),
-                                        OutlinedButton(
-                                          onPressed: () =>
-                                              print("it's pressed"),
-                                          style: OutlinedButton.styleFrom(
-                                            overlayColor: Colors.green,
-                                            side: BorderSide(
-                                                width: 1.5,
-                                                color: primaryColor),
-                                            shape: CircleBorder(),
-                                          ),
-                                          child: SvgPicture.asset(
-                                              CustomIcons.Plus,
-                                              colorFilter: ColorFilter.mode(
-                                                  primaryColor,
-                                                  BlendMode.srcIn)),
-                                        ),
-                                      ],
-                                    ),
+                                  CxInputQty(
+                                    onQtyChanged: (val) {},
+                                    color: primaryColor,
                                   ),
-                                  Expanded(
-                                    child: InkWell(
+                                  const SizedBox(
+                                    width: 12,
+                                  ),
+                                  CxMainButtonSvg(context,
+                                      title: 'Panen',
                                       onTap: () {},
-                                      child: Container(
-                                        padding: const EdgeInsets.all(12),
-                                        decoration: BoxDecoration(
-                                          color: Colors.green,
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            SvgPicture.asset(CustomIcons.Info),
-                                            SizedBox(
-                                              width: 8,
-                                            ),
-                                            Text('Panen'),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  )
+                                      icon: CxIcons.edit,
+                                      color: primaryColor)
                                 ],
                               ),
                             )
