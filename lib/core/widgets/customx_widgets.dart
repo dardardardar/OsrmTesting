@@ -5,15 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:osrmtesting/core/theme/theme.dart';
 
-class CxIcons {
-  static const _base = 'assets/icons/';
-  static String info = "${_base}info.svg";
-  static String tree = "${_base}tree.svg";
-  static String plus = "${_base}plus.svg";
-  static String minus = "${_base}minus.svg";
-  static String edit = "${_base}rebase_edit.svg";
-}
-
 class CxInputQty extends StatefulWidget {
   final int initialValue;
   final int minValue;
@@ -58,53 +49,51 @@ class _CxInputQty extends State<CxInputQty> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          CxCircleBorderBtnSvg(
-              onPressed: value <= 0
-                  ? () {}
-                  : () {
-                      _count();
-                      widget.onQtyChanged(value);
-                    },
-              color: widget.color ?? Theme.of(context).primaryColor,
-              customIcon: CxIcons.minus),
-          ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 72),
-            child: TextField(
-              onChanged: (val) {
-                setState(() {
-                  value = int.tryParse(val) ?? 0;
-                  widget.onQtyChanged(value);
-                });
-              },
-              controller: controller,
-              onTapOutside: (event) {
-                FocusManager.instance.primaryFocus?.unfocus();
-              },
-              textAlign: TextAlign.center,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(borderSide: BorderSide.none),
-                hintText: '0',
-              ),
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
-              ], // Only numbers can be entered
-            ),
-          ),
-          CxCircleBorderBtnSvg(
-              onPressed: () {
-                _count(increase: true);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        CxCircleBorderBtnSvg(
+            onPressed: value <= 0
+                ? () {}
+                : () {
+                    _count();
+                    widget.onQtyChanged(value);
+                  },
+            color: widget.color ?? Theme.of(context).primaryColor,
+            customIcon: IconPath.minus),
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 72),
+          child: TextField(
+            onChanged: (val) {
+              setState(() {
+                value = int.tryParse(val) ?? 0;
                 widget.onQtyChanged(value);
-              },
-              color: widget.color ?? Theme.of(context).primaryColor,
-              customIcon: CxIcons.plus)
-        ],
-      ),
+              });
+            },
+            controller: controller,
+            onTapOutside: (event) {
+              FocusManager.instance.primaryFocus?.unfocus();
+            },
+            textAlign: TextAlign.center,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(borderSide: BorderSide.none),
+              hintText: '0',
+            ),
+            keyboardType: TextInputType.number,
+            inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.digitsOnly
+            ], // Only numbers can be entered
+          ),
+        ),
+        CxCircleBorderBtnSvg(
+            onPressed: () {
+              _count(increase: true);
+              widget.onQtyChanged(value);
+            },
+            color: widget.color ?? Theme.of(context).primaryColor,
+            customIcon: IconPath.plus)
+      ],
     );
   }
 }
@@ -116,67 +105,82 @@ Widget CxMainButtonSvg(
   String? icon,
   Color? color,
   bool isLight = false,
+  bool stretch = false,
 }) {
-  return Expanded(
-    child: InkWell(
-      onTap: onTap,
-      child: Container(
-        alignment: Alignment.center,
-        padding: padding12,
-        decoration: BoxDecoration(
-          color: color ?? Theme.of(context).primaryColor,
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: icon != null
-            ? Row(
+  final widget = InkWell(
+    onTap: onTap,
+    child: Container(
+      alignment: Alignment.center,
+      padding: padding12,
+      decoration: BoxDecoration(
+        color: color ?? Theme.of(context).primaryColor,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: icon != null
+          ? Expanded(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SvgPicture.asset(icon.toString(),
+                      width: 18,
                       colorFilter: ColorFilter.mode(
                           isLight ? Colors.black : Colors.white,
                           BlendMode.srcIn)),
                   const SizedBox(
-                    width: 8,
+                    width: 4,
                   ),
                   Text(
                     title,
                     style: TextStyle(
                         color: isLight ? Colors.black : Colors.white,
-                        fontWeight: FontWeight.w600),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14),
                   ),
                 ],
-              )
-            : Text(
-                title,
-                style: TextStyle(
-                    color: isLight ? Colors.black : Colors.white,
-                    fontWeight: FontWeight.w600),
               ),
-      ),
+            )
+          : Text(
+              title,
+              style: TextStyle(
+                  color: isLight ? Colors.black : Colors.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14),
+            ),
+    ),
+  );
+  if (stretch) {
+    return Expanded(child: widget);
+  }
+  return Flexible(
+    child: SizedBox(
+      width: 148,
+      child: widget,
     ),
   );
 }
 
 Widget CxCircleBorderBtnSvg(
     {required Function()? onPressed,
-    double width = 48,
+    double size = 42,
     String? customIcon,
     Color? color}) {
   final c = color ?? const Color(0xff000000);
 
   return SizedBox(
-    width: width,
+    width: size,
+    height: size,
     child: OutlinedButton(
       onPressed: onPressed,
       style: OutlinedButton.styleFrom(
-          overlayColor: c,
-          side: BorderSide(width: 1.5, color: c),
-          shape: const CircleBorder(),
-          padding: padding12),
+        padding: const EdgeInsets.all(0),
+        overlayColor: c,
+        side: BorderSide(width: 1.5, color: c),
+        shape: const CircleBorder(),
+      ),
       child: customIcon == null
           ? const Center()
           : SvgPicture.asset(customIcon,
-              colorFilter: ColorFilter.mode(c, BlendMode.srcIn)),
+              width: 20, colorFilter: ColorFilter.mode(c, BlendMode.srcIn)),
     ),
   );
 }

@@ -1,10 +1,11 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:mbtiles/mbtiles.dart';
+import 'package:osrmtesting/core/const/strings.dart';
 import 'package:osrmtesting/core/theme/theme.dart';
 import 'package:osrmtesting/core/utils/functions.dart';
 import 'package:osrmtesting/features/home/domain/entities/tree_marker.dart';
@@ -107,5 +108,127 @@ Marker treeMarker(BuildContext context,
         ],
       ),
     ),
+  );
+}
+
+Widget treeDetailNew() {
+  return Container(
+    padding: padding8,
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SvgPicture.asset(
+              IconPath.info,
+              width: 28,
+              colorFilter:
+                  const ColorFilter.mode(disabledColor, BlendMode.srcIn),
+            ),
+            spacer8w,
+            Expanded(
+              child: const Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    treeNotFoundTitle,
+                    style: text14,
+                  ),
+                  Text(
+                    treeNotFoundDetail,
+                    style: text10,
+                    overflow: TextOverflow.ellipsis,
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+        spacer8h
+      ],
+    ),
+  );
+}
+
+Widget treeDetail() {
+  List<dynamic> datas = ['K37-50', 'K37', '2', 'Ancak 1', 'AFD 6'];
+  return Column(
+    children: [
+      Padding(
+        padding: padding8,
+        child: Row(
+          children: [
+            Row(
+              children: [
+                SvgPicture.asset(
+                  IconPath.tree,
+                  width: 18,
+                ),
+                spacer8w,
+                Text('Detail Pokok'),
+              ],
+            ),
+            Spacer(),
+            Row(
+              children: [
+                SvgPicture.asset(
+                  IconPath.info,
+                  width: 18,
+                  colorFilter:
+                      const ColorFilter.mode(disabledColor, BlendMode.srcIn),
+                ),
+                spacer8w,
+                Text(
+                  'Siap Panen',
+                  style: text14.copyWith(color: disabledColor),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      Padding(
+        padding: padding8,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(
+              treeDetailLabels.length,
+              (i) {
+                return Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    spacer12w,
+                    Padding(
+                      padding: padding8,
+                      child: Column(
+                        children: [
+                          Text(
+                            treeDetailLabels[i],
+                            style: text10,
+                          ),
+                          const SizedBox(
+                            height: 4,
+                          ),
+                          Text(
+                            datas[i].toString(),
+                            style: text14b,
+                          )
+                        ],
+                      ),
+                    ),
+                    spacer12w,
+                  ],
+                );
+              },
+            ),
+          ),
+        ),
+      ),
+    ],
   );
 }

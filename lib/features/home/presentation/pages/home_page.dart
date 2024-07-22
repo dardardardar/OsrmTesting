@@ -3,11 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:flutter_map_mbtiles/flutter_map_mbtiles.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:mbtiles/mbtiles.dart';
 import 'package:osrmtesting/core/theme/theme.dart';
-import 'package:osrmtesting/core/utils/functions.dart';
 import 'package:osrmtesting/core/widgets/customx_widgets.dart';
 import 'package:osrmtesting/features/home/presentation/cubit/map_layer/local/local_map_layer_cubit.dart';
 import 'package:osrmtesting/features/home/presentation/cubit/map_layer/local/local_map_layer_state.dart';
@@ -28,11 +27,16 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Polyline> _polylines = [];
   List<bool> isVisible = [];
   List<double> size = [];
+
+  bool isNear = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Panen'),
+        title: const Text(
+          'Jelajah Pokok',
+          style: text18b,
+        ),
       ),
       body: BlocBuilder<LocalMapLayerCubit, LocalMapLayerState>(
         builder: (context, state) {
@@ -129,9 +133,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     ),
                                                   ],
                                                   color: Colors.white),
-                                              child: Image.asset(
-                                                  'assets/icons/go-harvest-assets.png',
-                                                  height: 24),
+                                              child: SvgPicture.asset(
+                                                IconPath.tree,
+                                                width: 96,
+                                                height: 96,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -187,8 +193,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                   child: Center(
                                     child: Text(
                                       markers.length.toString(),
-                                      style:
-                                          const TextStyle(color: Colors.black),
                                     ),
                                   ),
                                 );
@@ -210,7 +214,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: padding16,
                   child: Column(
                     children: [
-                      debugPanel(_mbtiles!.getMetadata()),
+                      //debugPanel(_mbtiles!.getMetadata()),
                       const Spacer(),
                       Container(
                         padding: padding8,
@@ -227,118 +231,12 @@ class _MyHomePageState extends State<MyHomePage> {
                             color: Colors.white),
                         child: Column(
                           children: [
+                            !isNear ? treeDetail() : treeDetailNew(),
                             Padding(
                               padding: padding8,
                               child: Row(
-                                children: [
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        CxIcons.tree,
-                                      ),
-                                      SizedBox(
-                                        width: 8,
-                                      ),
-                                      Text('Detail Pokok'),
-                                    ],
-                                  ),
-                                  Spacer(),
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        CxIcons.info,
-                                      ),
-                                      SizedBox(
-                                        width: 8,
-                                      ),
-                                      Text('Siap Panen'),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const Padding(
-                              padding: padding8,
-                              child: Wrap(
-                                children: [
-                                  Padding(
-                                    padding: padding8,
-                                    child: Column(
-                                      children: [
-                                        Text('Pokok'),
-                                        SizedBox(
-                                          height: 2,
-                                        ),
-                                        Text('data')
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 24,
-                                  ),
-                                  Padding(
-                                    padding: padding8,
-                                    child: Column(
-                                      children: [
-                                        Text('Blok'),
-                                        SizedBox(
-                                          height: 2,
-                                        ),
-                                        Text('data')
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 24,
-                                  ),
-                                  Padding(
-                                    padding: padding8,
-                                    child: Column(
-                                      children: [
-                                        Text('Baris'),
-                                        SizedBox(
-                                          height: 2,
-                                        ),
-                                        Text('data')
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 24,
-                                  ),
-                                  Padding(
-                                    padding: padding8,
-                                    child: Column(
-                                      children: [
-                                        Text('Ancak'),
-                                        SizedBox(
-                                          height: 2,
-                                        ),
-                                        Text('data')
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 24,
-                                  ),
-                                  Padding(
-                                    padding: padding8,
-                                    child: Column(
-                                      children: [
-                                        Text('Afdeling'),
-                                        SizedBox(
-                                          height: 2,
-                                        ),
-                                        Text('data')
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: padding8,
-                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   CxInputQty(
                                     onQtyChanged: (val) {},
@@ -350,7 +248,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   CxMainButtonSvg(context,
                                       title: 'Panen',
                                       onTap: () {},
-                                      icon: CxIcons.edit,
+                                      icon: IconPath.edit,
                                       color: primaryColor)
                                 ],
                               ),
