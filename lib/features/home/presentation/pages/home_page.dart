@@ -250,7 +250,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   const SizedBox(
                                     width: 12,
                                   ),
-                                  CxMainButtonSvg(context, title: 'Panen',
+                                  CxMainButton(context, title: 'Panen',
                                       onTap: () {
                                     print(qty);
                                   }, icon: IconPath.edit, color: primaryColor)

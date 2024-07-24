@@ -196,41 +196,30 @@ Widget treeDetail() {
       ),
       Padding(
         padding: padding8,
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(
-              treeDetailLabels.length,
-              (i) {
-                return Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: List.generate(
+            treeDetailLabels.length,
+            (i) {
+              return Padding(
+                padding: padding4,
+                child: Column(
                   children: [
-                    spacer12w,
-                    Padding(
-                      padding: padding8,
-                      child: Column(
-                        children: [
-                          Text(
-                            treeDetailLabels[i],
-                            style: text10,
-                          ),
-                          const SizedBox(
-                            height: 4,
-                          ),
-                          Text(
-                            datas[i].toString(),
-                            style: text14b,
-                          )
-                        ],
-                      ),
+                    Text(
+                      treeDetailLabels[i],
+                      style: text10,
                     ),
-                    spacer12w,
+                    const SizedBox(
+                      height: 4,
+                    ),
+                    Text(
+                      datas[i].toString(),
+                      style: text14b,
+                    )
                   ],
-                );
-              },
-            ),
+                ),
+              );
+            },
           ),
         ),
       ),

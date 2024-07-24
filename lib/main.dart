@@ -32,9 +32,10 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(useMaterial3: true, colorScheme: colorSchemes),
-        home: const LoginPage(
-          brand: 'Go-Harvest',
-        ),
+        // home: const LoginPage(
+        //   brand: 'Go-Harvest',
+        // ),
+        home: MyHomePage(),
       ),
     );
   }

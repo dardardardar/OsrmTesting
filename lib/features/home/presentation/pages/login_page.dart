@@ -24,6 +24,7 @@ class _LoginPageState extends State<LoginPage> {
           context: context,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -39,7 +40,19 @@ class _LoginPageState extends State<LoginPage> {
                     label: 'Email',
                     placeholder: 'Email terdaftar',
                     controller: _ctrl),
-              )
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: textFormFieldWithLabel(
+                    label: 'Password',
+                    placeholder: 'Password',
+                    controller: _ctrl),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: textButton(text: 'Lupa Kata Sandi?', style: text14b),
+              ),
+              CxMainButtonSvg(context, title: 'Masuk', stretch: true)
             ],
           )),
     );

@@ -99,6 +99,44 @@ class _CxInputQty extends State<CxInputQty> {
   }
 }
 
+Widget CxMainButton(
+  BuildContext context, {
+  Function()? onTap,
+  required String title,
+  String? icon,
+  Color? color,
+  bool isLight = false,
+  bool stretch = false,
+}) {
+  return MaterialButton(
+    onPressed: onTap,
+    color: color,
+    elevation: 0,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+    height: 36,
+    padding: EdgeInsets.symmetric(horizontal: 32),
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SvgPicture.asset(icon.toString(),
+            width: 18,
+            colorFilter: ColorFilter.mode(
+                isLight ? Colors.black : Colors.white, BlendMode.srcIn)),
+        const SizedBox(
+          width: 4,
+        ),
+        Text(
+          title,
+          style: TextStyle(
+              color: isLight ? Colors.black : Colors.white,
+              fontWeight: FontWeight.w600,
+              fontSize: 14),
+        ),
+      ],
+    ),
+  );
+}
+
 Widget CxMainButtonSvg(
   BuildContext context, {
   Function()? onTap,
@@ -112,6 +150,7 @@ Widget CxMainButtonSvg(
     onTap: onTap,
     child: Container(
       alignment: Alignment.center,
+      height: 60,
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: color ?? Colors.black,
@@ -150,7 +189,7 @@ Widget CxMainButtonSvg(
     ),
   );
   if (stretch) {
-    return Expanded(child: widget);
+    return SizedBox(width: double.infinity, child: widget);
   }
   return Flexible(
     child: SizedBox(
@@ -162,7 +201,7 @@ Widget CxMainButtonSvg(
 
 Widget CxCircleBorderBtnSvg(
     {required Function()? onPressed,
-    double size = 42,
+    double size = 36,
     String? customIcon,
     Color? color}) {
   return SizedBox(
@@ -179,9 +218,9 @@ Widget CxCircleBorderBtnSvg(
       child: customIcon == null
           ? const Center()
           : SvgPicture.asset(customIcon,
-              width: 20,
+              width: 18,
               colorFilter:
-                  const ColorFilter.mode(Colors.black, BlendMode.srcIn)),
+                  ColorFilter.mode(color ?? Colors.black, BlendMode.srcIn)),
     ),
   );
 }
@@ -224,5 +263,15 @@ Widget textFormFieldWithLabel({
             hintText: placeholder),
       ),
     ],
+  );
+}
+
+Widget textButton({Function()? onTap, required String text, TextStyle? style}) {
+  return InkWell(
+    onTap: onTap,
+    child: Text(
+      text,
+      style: style,
+    ),
   );
 }
