@@ -6,6 +6,7 @@ import 'package:flutter_map_mbtiles/flutter_map_mbtiles.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:mbtiles/mbtiles.dart';
+import 'package:osrmtesting/core/theme/custom_theme.dart';
 import 'package:osrmtesting/core/theme/theme.dart';
 import 'package:osrmtesting/core/widgets/customx_widgets.dart';
 import 'package:osrmtesting/features/home/presentation/cubit/map_layer/local/local_map_layer_cubit.dart';
@@ -27,7 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Polyline> _polylines = [];
   List<bool> isVisible = [];
   List<double> size = [];
-
+  int qty = 0;
   bool isNear = false;
   @override
   Widget build(BuildContext context) {
@@ -239,17 +240,20 @@ class _MyHomePageState extends State<MyHomePage> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   CxInputQty(
-                                    onQtyChanged: (val) {},
+                                    onQtyChanged: (val) {
+                                      setState(() {
+                                        qty = val;
+                                      });
+                                    },
                                     color: primaryColor,
                                   ),
                                   const SizedBox(
                                     width: 12,
                                   ),
-                                  CxMainButtonSvg(context,
-                                      title: 'Panen',
-                                      onTap: () {},
-                                      icon: IconPath.edit,
-                                      color: primaryColor)
+                                  CxMainButtonSvg(context, title: 'Panen',
+                                      onTap: () {
+                                    print(qty);
+                                  }, icon: IconPath.edit, color: primaryColor)
                                 ],
                               ),
                             )

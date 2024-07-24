@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:osrmtesting/core/theme/custom_theme.dart';
 import 'package:osrmtesting/core/theme/theme.dart';
 
 class CxInputQty extends StatefulWidget {
@@ -60,7 +61,7 @@ class _CxInputQty extends State<CxInputQty> {
                     _count();
                     widget.onQtyChanged(value);
                   },
-            color: widget.color ?? Theme.of(context).primaryColor,
+            color: widget.color ?? Colors.black,
             customIcon: IconPath.minus),
         ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 72),
@@ -91,7 +92,7 @@ class _CxInputQty extends State<CxInputQty> {
               _count(increase: true);
               widget.onQtyChanged(value);
             },
-            color: widget.color ?? Theme.of(context).primaryColor,
+            color: widget.color ?? Colors.black,
             customIcon: IconPath.plus)
       ],
     );
@@ -111,9 +112,9 @@ Widget CxMainButtonSvg(
     onTap: onTap,
     child: Container(
       alignment: Alignment.center,
-      padding: padding12,
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color ?? Theme.of(context).primaryColor,
+        color: color ?? Colors.black,
         borderRadius: BorderRadius.circular(8),
       ),
       child: icon != null
@@ -164,8 +165,6 @@ Widget CxCircleBorderBtnSvg(
     double size = 42,
     String? customIcon,
     Color? color}) {
-  final c = color ?? const Color(0xff000000);
-
   return SizedBox(
     width: size,
     height: size,
@@ -173,14 +172,57 @@ Widget CxCircleBorderBtnSvg(
       onPressed: onPressed,
       style: OutlinedButton.styleFrom(
         padding: const EdgeInsets.all(0),
-        overlayColor: c,
-        side: BorderSide(width: 1.5, color: c),
+        overlayColor: color,
+        side: BorderSide(width: 1.5, color: color ?? Colors.black),
         shape: const CircleBorder(),
       ),
       child: customIcon == null
           ? const Center()
           : SvgPicture.asset(customIcon,
-              width: 20, colorFilter: ColorFilter.mode(c, BlendMode.srcIn)),
+              width: 20,
+              colorFilter:
+                  const ColorFilter.mode(Colors.black, BlendMode.srcIn)),
     ),
+  );
+}
+
+Widget textFormFieldWithLabel({
+  required String label,
+  required String placeholder,
+  String? Function(String?)? validator,
+  required TextEditingController controller,
+  bool? isPassword,
+}) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Text(label),
+      spacer8h,
+      TextFormField(
+        validator: validator,
+        onTapOutside: (event) {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+        decoration: InputDecoration(
+            fillColor: surfaceBackground,
+            disabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black12, width: 1),
+            ),
+            border: const OutlineInputBorder(),
+            filled: true,
+            enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: borderColor, width: 1),
+            ),
+            focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: borderColor, width: 1),
+            ),
+            errorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: failedColor, width: 1),
+            ),
+            hintText: placeholder),
+      ),
+    ],
   );
 }

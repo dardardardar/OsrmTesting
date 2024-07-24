@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:mbtiles/mbtiles.dart';
 import 'package:osrmtesting/core/const/strings.dart';
+import 'package:osrmtesting/core/theme/custom_theme.dart';
 import 'package:osrmtesting/core/theme/theme.dart';
 import 'package:osrmtesting/core/utils/functions.dart';
 import 'package:osrmtesting/features/home/domain/entities/tree_marker.dart';
@@ -179,6 +180,10 @@ Widget treeDetail() {
                   colorFilter:
                       const ColorFilter.mode(disabledColor, BlendMode.srcIn),
                 ),
+                // Image.asset(
+                //   'assets/icons/info.png',
+                //   color: disabledColor,
+                // ),
                 spacer8w,
                 Text(
                   'Siap Panen',

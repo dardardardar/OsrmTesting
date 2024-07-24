@@ -1,11 +1,5 @@
 import 'package:flutter/widgets.dart';
 
-const primaryColor = Color(0xff49BF61);
-const completeColor = Color(0xff008000);
-const pendingColor = Color(0xffADAD00);
-const failedColor = Color(0xffAB0000);
-const disabledColor = Color(0xFF808080);
-
 const padding4 = EdgeInsets.all(4);
 const padding8 = EdgeInsets.all(8);
 const padding12 = EdgeInsets.all(12);
@@ -17,15 +11,6 @@ const text10 = TextStyle(fontSize: 10, overflow: TextOverflow.ellipsis);
 const text14 = TextStyle(fontSize: 14, overflow: TextOverflow.ellipsis);
 const text16 = TextStyle(fontSize: 16, overflow: TextOverflow.ellipsis);
 const text18 = TextStyle(fontSize: 18, overflow: TextOverflow.ellipsis);
-
-class IconPath {
-  static const _base = 'assets/icons/';
-  static const info = "${_base}info.svg";
-  static const tree = "${_base}tree.svg";
-  static const plus = "${_base}plus.svg";
-  static const minus = "${_base}minus.svg";
-  static const edit = "${_base}rebase_edit.svg";
-}
 
 const text10b = TextStyle(
     fontSize: 10, overflow: TextOverflow.ellipsis, fontWeight: FontWeight.w600);

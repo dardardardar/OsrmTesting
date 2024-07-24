@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:osrmtesting/core/theme/custom_theme.dart';
 import 'package:osrmtesting/features/home/presentation/cubit/map_layer/local/local_map_layer_cubit.dart';
 import 'package:osrmtesting/features/home/presentation/cubit/map_layer/local/local_map_layer_event.dart';
 import 'package:osrmtesting/features/home/presentation/cubit/map_layer/remote/remote_map_layer_cubit.dart';
 import 'package:osrmtesting/features/home/presentation/cubit/map_layer/remote/remote_map_layer_event.dart';
 import 'package:osrmtesting/features/home/presentation/pages/home_page.dart';
+import 'package:osrmtesting/features/home/presentation/pages/login_page.dart';
 import 'package:osrmtesting/get_it_container.dart';
 
 Future<void> main() async {
@@ -29,10 +31,10 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
-        theme: ThemeData(
-          useMaterial3: true,
+        theme: ThemeData(useMaterial3: true, colorScheme: colorSchemes),
+        home: const LoginPage(
+          brand: 'Go-Harvest',
         ),
-        home: const MyHomePage(),
       ),
     );
   }
