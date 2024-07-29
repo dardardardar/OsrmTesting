@@ -140,7 +140,7 @@ Widget treeDetailNew() {
                   Text(
                     treeNotFoundDetail,
                     style: text10,
-                    overflow: TextOverflow.ellipsis,
+                    overflow: TextOverflow.visible,
                   )
                 ],
               ),

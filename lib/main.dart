@@ -35,7 +35,9 @@ class MyApp extends StatelessWidget {
         // home: const LoginPage(
         //   brand: 'Go-Harvest',
         // ),
-        home: MyHomePage(),
+        home: LoginPage(
+          brand: 'Go-Harvest',
+        ),
       ),
     );
   }

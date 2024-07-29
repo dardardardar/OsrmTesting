@@ -7,6 +7,10 @@ abstract class BaseState<T> {
   const BaseState({this.data, this.dioException, this.exception});
 }
 
+class InitialState<T> extends BaseState<T> {
+  const InitialState();
+}
+
 class SuccessState<T> extends BaseState<T> {
   const SuccessState({required T data, String? message}) : super(data: data);
 }

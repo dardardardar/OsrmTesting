@@ -16,14 +16,14 @@ import 'package:osrmtesting/features/home/presentation/cubit/map_layer/remote/re
 import 'package:osrmtesting/features/home/presentation/widgets/home_widget.dart';
 import 'package:flutter/material.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class HarvestPage extends StatefulWidget {
+  const HarvestPage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<HarvestPage> createState() => _HarvestPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HarvestPageState extends State<HarvestPage> {
   MbTiles? _mbtiles;
   List<Polyline> _polylines = [];
   List<bool> isVisible = [];
@@ -232,7 +232,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             color: Colors.white),
                         child: Column(
                           children: [
-                            !isNear ? treeDetail() : treeDetailNew(),
+                            isNear ? treeDetail() : treeDetailNew(),
                             Padding(
                               padding: padding8,
                               child: Row(
@@ -250,10 +250,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                   const SizedBox(
                                     width: 12,
                                   ),
-                                  CxMainButton(context, title: 'Panen',
+                                  CxMainButton(
+                                      title: 'Panen',
                                       onTap: () {
-                                    print(qty);
-                                  }, icon: IconPath.edit, color: primaryColor)
+                                        print(qty);
+                                      },
+                                      icon: IconPath.edit,
+                                      color: primaryColor)
                                 ],
                               ),
                             )
