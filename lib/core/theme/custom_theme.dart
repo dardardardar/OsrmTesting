@@ -7,6 +7,11 @@ class IconPath {
   static const plus = "${_base}plus.svg";
   static const minus = "${_base}minus.svg";
   static const edit = "${_base}rebase_edit.svg";
+  static const cottage = "${_base}cottage.svg";
+  static const naturePeople = "${_base}nature_people.svg";
+  static const homeRepair = "${_base}home_repair_service.svg";
+  static const exportNotes = "${_base}export_notes.svg";
+  static const accoutCircle = "${_base}account_circle.svg";
 }
 
 const primaryColor = Color(0xff49BF61);

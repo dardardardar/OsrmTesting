@@ -5,7 +5,6 @@ import 'package:osrmtesting/features/home/presentation/cubit/map_layer/local/loc
 import 'package:osrmtesting/features/home/presentation/cubit/map_layer/local/local_map_layer_event.dart';
 import 'package:osrmtesting/features/home/presentation/cubit/map_layer/remote/remote_map_layer_cubit.dart';
 import 'package:osrmtesting/features/home/presentation/cubit/map_layer/remote/remote_map_layer_event.dart';
-import 'package:osrmtesting/features/home/presentation/pages/home_page.dart';
 import 'package:osrmtesting/features/home/presentation/pages/login_page.dart';
 import 'package:osrmtesting/get_it_container.dart';
 
@@ -35,7 +34,7 @@ class MyApp extends StatelessWidget {
         // home: const LoginPage(
         //   brand: 'Go-Harvest',
         // ),
-        home: LoginPage(
+        home: const LoginPage(
           brand: 'Go-Harvest',
         ),
       ),

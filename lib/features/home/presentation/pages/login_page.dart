@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:osrmtesting/core/theme/custom_theme.dart';
 import 'package:osrmtesting/core/theme/theme.dart';
+import 'package:osrmtesting/core/utils/functions.dart';
 import 'package:osrmtesting/core/widgets/customx_widgets.dart';
+import 'package:osrmtesting/features/home/presentation/pages/harvest_page.dart';
 import 'package:osrmtesting/features/home/presentation/pages/home_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -37,8 +38,9 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 Text(
                   widget.brand,
-                  style: const TextStyle(
-                      fontSize: 56, fontWeight: FontWeight.w700),
+                  style: TextStyle(
+                      fontSize: context.isMobileSmall ? 48 : 56,
+                      fontWeight: FontWeight.w700),
                 ),
                 spacer16h,
                 CxTextFormField(
@@ -72,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const HarvestPage()));
+                          builder: (context) => const HomePage()));
                     }
                   },
                   color: primaryColor,

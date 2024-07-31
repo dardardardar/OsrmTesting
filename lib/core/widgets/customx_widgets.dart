@@ -117,34 +117,40 @@ class CxMainButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialButton(
-      onPressed: onTap,
-      color: color,
-      elevation: 0,
-      minWidth: width,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-      height: 36,
-      padding: const EdgeInsets.symmetric(horizontal: 32),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          icon != null
-              ? SvgPicture.asset(icon!,
-                  width: 18,
-                  colorFilter: ColorFilter.mode(
-                      isLight ? Colors.black : Colors.white, BlendMode.srcIn))
-              : const Center(),
-          const SizedBox(
-            width: 4,
-          ),
-          Text(
-            title,
-            style: TextStyle(
-                color: isLight ? Colors.black : Colors.white,
-                fontWeight: FontWeight.w600,
-                fontSize: 14),
-          ),
-        ],
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        alignment: Alignment.center,
+        width: width,
+        height: 40,
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(6),
+          color: color,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            icon != null
+                ? SvgPicture.asset(icon!,
+                    width: 18,
+                    colorFilter: ColorFilter.mode(
+                        isLight ? Colors.black : Colors.white, BlendMode.srcIn))
+                : const Center(),
+            const SizedBox(
+              width: 4,
+            ),
+            Text(
+              title,
+              style: TextStyle(
+                  color: isLight ? Colors.black : Colors.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -327,7 +333,16 @@ class CxTextButton extends StatelessWidget {
 class CxStackContainer extends StatelessWidget {
   final Color? color;
   final Widget child;
-  const CxStackContainer({super.key, this.color, required this.child});
+  final bool hideTopBackground;
+  final bool hideBottomBackground;
+  final Widget? bottomAppBar;
+  const CxStackContainer(
+      {super.key,
+      this.color,
+      required this.child,
+      this.hideTopBackground = false,
+      this.hideBottomBackground = false,
+      this.bottomAppBar});
 
   @override
   Widget build(BuildContext context) {
@@ -336,26 +351,35 @@ class CxStackContainer extends StatelessWidget {
       children: [
         Column(
           children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: Image.asset(
-                fit: BoxFit.fitWidth,
-                'assets/bg/top.png',
-                color: color,
-              ),
-            ),
+            hideTopBackground
+                ? const Center()
+                : SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: Image.asset(
+                      fit: BoxFit.fitWidth,
+                      'assets/bg/top.png',
+                      color: color,
+                    ),
+                  ),
             const Spacer(),
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: Image.asset(
-                fit: BoxFit.fitWidth,
-                'assets/bg/bottom.png',
-                color: color,
-              ),
-            ),
+            hideBottomBackground
+                ? const Center()
+                : SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: Image.asset(
+                      fit: BoxFit.fitWidth,
+                      'assets/bg/bottom.png',
+                      color: color,
+                    ),
+                  ),
           ],
         ),
-        child
+        child,
+        bottomAppBar != null
+            ? Column(
+                children: [const Spacer(), bottomAppBar!],
+              )
+            : const Center()
       ],
     );
   }
