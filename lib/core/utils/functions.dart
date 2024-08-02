@@ -27,7 +27,7 @@ double sizeByScreenWidth(
 
 extension BuildContextEntension<T> on BuildContext {
   bool get isMobile => MediaQuery.sizeOf(this).width <= 500.0;
-  bool get isMobileSmall => MediaQuery.sizeOf(this).width <= 360.0;
+  bool get isMobileSmall => MediaQuery.sizeOf(this).width <= 380.0;
 
   bool get isTablet =>
       MediaQuery.sizeOf(this).width < 1024.0 &&

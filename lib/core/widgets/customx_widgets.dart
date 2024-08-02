@@ -260,19 +260,34 @@ class CxCircleBorderBtnSvg extends StatelessWidget {
   }
 }
 
-class CxTextFormField extends StatelessWidget {
-  final String label;
+class CxTextFormField extends StatefulWidget {
+  final String? label;
   final String placeholder;
   final TextEditingController controller;
   final String? Function(String?)? validator;
   final bool? isPassword;
+  final Color? background;
+
   const CxTextFormField(
       {super.key,
-      required this.label,
+      this.label,
       required this.placeholder,
       required this.controller,
       this.validator,
-      this.isPassword});
+      this.isPassword = false,
+      this.background});
+
+  @override
+  State<CxTextFormField> createState() => _CxTextFormFieldState();
+}
+
+class _CxTextFormFieldState extends State<CxTextFormField> {
+  late bool _passwordVisible;
+  @override
+  void initState() {
+    super.initState();
+    _passwordVisible = false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -281,16 +296,33 @@ class CxTextFormField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(label),
+        widget.label != null ? Text(widget.label!) : const Center(),
         spacer8h,
         TextFormField(
-          obscureText: isPassword ?? false,
-          validator: validator,
+          obscureText: widget.isPassword! && !_passwordVisible ? true : false,
+          validator: widget.validator,
           onTapOutside: (event) {
             FocusManager.instance.primaryFocus?.unfocus();
           },
           decoration: InputDecoration(
-              fillColor: surfaceBackground,
+              suffixIcon: widget.isPassword!
+                  ? IconButton(
+                      icon: Icon(
+                        // Based on passwordVisible state choose the icon
+                        _passwordVisible
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                        color: Colors.black54,
+                      ),
+                      onPressed: () {
+                        // Update the state i.e. toogle the state of passwordVisible variable
+                        setState(() {
+                          _passwordVisible = !_passwordVisible;
+                        });
+                      },
+                    )
+                  : null,
+              fillColor: widget.background ?? surfaceBackground,
               disabledBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.black12, width: 1),
               ),
@@ -305,7 +337,7 @@ class CxTextFormField extends StatelessWidget {
               errorBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: failedColor, width: 1),
               ),
-              hintText: placeholder),
+              hintText: widget.placeholder),
         ),
       ],
     );
