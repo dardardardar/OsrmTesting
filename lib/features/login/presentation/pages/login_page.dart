@@ -4,6 +4,7 @@ import 'package:osrmtesting/core/theme/theme.dart';
 import 'package:osrmtesting/core/utils/functions.dart';
 import 'package:osrmtesting/core/widgets/customx_widgets.dart';
 import 'package:osrmtesting/features/home/presentation/pages/home_page.dart';
+import 'package:osrmtesting/features/login/presentation/pages/login_page_data.dart';
 
 class LoginPage extends StatefulWidget {
   final String brand;
@@ -42,6 +43,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 spacer16h,
                 CxTextFormField(
+                    inputType: CxInputType.email,
                     label: 'Email',
                     placeholder: 'Email terdaftar',
                     validator: (value) {
@@ -57,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                     controller: _emailCtrl),
                 spacer16h,
                 CxTextFormField(
-                    isPassword: true,
+                    inputType: CxInputType.password,
                     label: 'Password',
                     placeholder: 'Password',
                     validator: (p0) {
@@ -96,11 +98,18 @@ class _LoginPageState extends State<LoginPage> {
                   width: MediaQuery.of(context).size.width,
                 ),
                 spacer16h,
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text('Belum punya akun? '),
-                    CxTextButton(text: 'Daftar Sekarang', style: text14b),
+                    CxTextButton(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const RegisterPage()));
+                      },
+                      text: 'Daftar Sekarang',
+                      style: text14b,
+                    ),
                   ],
                 ),
                 spacer16h,
@@ -151,6 +160,7 @@ class _ModalForgotPasswordState extends State<ModalForgotPassword> {
               ),
               spacer8h,
               CxTextFormField(
+                  inputType: CxInputType.email,
                   placeholder: 'Email terdaftar',
                   validator: (value) {
                     if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
@@ -179,6 +189,157 @@ class _ModalForgotPasswordState extends State<ModalForgotPassword> {
   }
 }
 
-const forgotPassTitle = 'Lupa kata sandi anda?';
-const forgotPassDetail =
-    'Silahkan masukkan email anda. Anda akan menerima link reset password pada inbox email anda';
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
+
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  final TextEditingController _emailCtrl = TextEditingController();
+  final TextEditingController _passCtrl = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: CxStackContainer(
+          hideBottomBackground: true,
+          child: Form(
+            key: _formKey,
+            child: Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(16.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      child: Row(
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              icon: Icon(Icons.arrow_back))
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 32,
+                    ),
+                    Text(
+                      'Register',
+                      style: const TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.w700),
+                    ),
+                    SizedBox(
+                      height: 32,
+                    ),
+                    CxTextFormField(
+                        label: 'Username',
+                        placeholder: 'Username',
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Username tidak boleh kosong!';
+                          } else {
+                            return null;
+                          }
+                        },
+                        controller: _emailCtrl),
+                    spacer16h,
+                    CxTextFormField(
+                        inputType: CxInputType.email,
+                        label: 'Email',
+                        placeholder: 'Email terdaftar',
+                        validator: (value) {
+                          if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                              .hasMatch(value!)) {
+                            return 'Email yang diisi tidak valid!';
+                          } else if (value.isEmpty) {
+                            return 'Email tidak boleh kosong!';
+                          } else {
+                            return null;
+                          }
+                        },
+                        controller: _emailCtrl),
+                    spacer16h,
+                    CxTextFormField(
+                        inputType: CxInputType.phone,
+                        label: 'Phone',
+                        placeholder: 'Phone Number',
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'No Telp tidak boleh kosong!';
+                          } else {
+                            return null;
+                          }
+                        },
+                        controller: _emailCtrl),
+                    spacer16h,
+                    CxTextFormField(
+                        inputType: CxInputType.password,
+                        label: 'Password',
+                        placeholder: 'Password',
+                        validator: (p0) {
+                          if (p0!.isEmpty) {
+                            return 'Password tidak boleh kosong!';
+                          }
+                          return null;
+                        },
+                        controller: _passCtrl),
+                    spacer16h,
+                    CxTextFormField(
+                        inputType: CxInputType.password,
+                        label: 'Confirm Password',
+                        placeholder: 'Confirm Password',
+                        validator: (p0) {
+                          if (p0!.isEmpty) {
+                            return 'Confirm Password tidak boleh kosong!';
+                          }
+                          return null;
+                        },
+                        controller: _passCtrl),
+                    SizedBox(
+                      height: 32,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(hasAccount),
+                        spacer4w,
+                        CxTextButton(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          text: 'Login',
+                          style: text14b,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 32,
+                    ),
+                    CxMainButton(
+                      title: 'Daftar',
+                      onTap: () {
+                        if (_formKey.currentState!.validate()) {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const HomePage()));
+                        }
+                      },
+                      color: primaryColor,
+                      width: MediaQuery.of(context).size.width,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          )),
+    );
+  }
+}

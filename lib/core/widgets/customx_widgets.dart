@@ -260,12 +260,14 @@ class CxCircleBorderBtnSvg extends StatelessWidget {
   }
 }
 
+enum CxInputType { text, email, password, numbers, phone }
+
 class CxTextFormField extends StatefulWidget {
+  final CxInputType inputType;
   final String? label;
   final String placeholder;
   final TextEditingController controller;
   final String? Function(String?)? validator;
-  final bool? isPassword;
   final Color? background;
 
   const CxTextFormField(
@@ -274,8 +276,8 @@ class CxTextFormField extends StatefulWidget {
       required this.placeholder,
       required this.controller,
       this.validator,
-      this.isPassword = false,
-      this.background});
+      this.background,
+      this.inputType = CxInputType.text});
 
   @override
   State<CxTextFormField> createState() => _CxTextFormFieldState();
@@ -283,10 +285,24 @@ class CxTextFormField extends StatefulWidget {
 
 class _CxTextFormFieldState extends State<CxTextFormField> {
   late bool _passwordVisible;
+  late TextInputType _type;
+
   @override
   void initState() {
     super.initState();
     _passwordVisible = false;
+    switch (widget.inputType) {
+      case CxInputType.text:
+        _type = TextInputType.text;
+      case CxInputType.email:
+        _type = TextInputType.emailAddress;
+      case CxInputType.password:
+        _type = TextInputType.text;
+      case CxInputType.numbers:
+        _type = TextInputType.number;
+      case CxInputType.phone:
+        _type = TextInputType.phone;
+    }
   }
 
   @override
@@ -299,13 +315,17 @@ class _CxTextFormFieldState extends State<CxTextFormField> {
         widget.label != null ? Text(widget.label!) : const Center(),
         spacer8h,
         TextFormField(
-          obscureText: widget.isPassword! && !_passwordVisible ? true : false,
+          obscureText:
+              widget.inputType == CxInputType.password && !_passwordVisible
+                  ? true
+                  : false,
           validator: widget.validator,
+          keyboardType: _type,
           onTapOutside: (event) {
             FocusManager.instance.primaryFocus?.unfocus();
           },
           decoration: InputDecoration(
-              suffixIcon: widget.isPassword!
+              suffixIcon: widget.inputType == CxInputType.password
                   ? IconButton(
                       icon: Icon(
                         // Based on passwordVisible state choose the icon
@@ -391,6 +411,7 @@ class CxStackContainer extends StatelessWidget {
                       fit: BoxFit.fitWidth,
                       'assets/bg/top.png',
                       color: color,
+                      colorBlendMode: BlendMode.srcIn,
                     ),
                   ),
             const Spacer(),
@@ -402,6 +423,7 @@ class CxStackContainer extends StatelessWidget {
                       fit: BoxFit.fitWidth,
                       'assets/bg/bottom.png',
                       color: color,
+                      colorBlendMode: BlendMode.srcIn,
                     ),
                   ),
           ],
