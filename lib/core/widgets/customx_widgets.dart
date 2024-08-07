@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:osrmtesting/core/theme/custom_theme.dart';
-import 'package:osrmtesting/core/theme/theme.dart';
+import 'package:osrmtesting/app/theme/custom_theme.dart';
+import 'package:osrmtesting/app/theme/theme.dart';
 
 class CxInputQty extends StatefulWidget {
   final int initialValue;

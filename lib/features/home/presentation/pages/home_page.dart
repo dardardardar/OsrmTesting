@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:osrmtesting/core/theme/custom_theme.dart';
-import 'package:osrmtesting/core/theme/theme.dart';
+import 'package:osrmtesting/app/theme/custom_theme.dart';
+import 'package:osrmtesting/app/theme/theme.dart';
 import 'package:osrmtesting/core/widgets/customx_widgets.dart';
 
 class BottomBarItemData {
@@ -152,7 +152,7 @@ class BottomBarItem extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        margin: padding4,
+        margin: padding4All,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

@@ -6,14 +6,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:mbtiles/mbtiles.dart';
 import 'package:osrmtesting/core/const/strings.dart';
-import 'package:osrmtesting/core/theme/custom_theme.dart';
-import 'package:osrmtesting/core/theme/theme.dart';
+import 'package:osrmtesting/app/theme/custom_theme.dart';
+import 'package:osrmtesting/app/theme/theme.dart';
 import 'package:osrmtesting/core/utils/functions.dart';
 import 'package:osrmtesting/features/harvest/domain/entities/tree_marker.dart';
 
 Widget debugPanel(MbTilesMetadata metadata) {
   return Padding(
-    padding: padding8,
+    padding: padding8All,
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,7 +60,7 @@ Marker treeMarker(BuildContext context,
         children: [
           Center(
             child: Container(
-              padding: padding8,
+              padding: padding8All,
               child: Container(
                 decoration: const ShapeDecoration(
                     shape: CircleBorder(),
@@ -81,7 +81,7 @@ Marker treeMarker(BuildContext context,
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              padding: padding4,
+              padding: padding4All,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(6),
                   boxShadow: const [
@@ -114,7 +114,7 @@ Marker treeMarker(BuildContext context,
 
 Widget treeDetailNew() {
   return Container(
-    padding: padding8,
+    padding: padding8All,
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -158,7 +158,7 @@ Widget treeDetail() {
   return Column(
     children: [
       Padding(
-        padding: padding8,
+        padding: padding8All,
         child: Row(
           children: [
             Row(
@@ -195,14 +195,14 @@ Widget treeDetail() {
         ),
       ),
       Padding(
-        padding: padding8,
+        padding: padding8All,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: List.generate(
             treeDetailLabels.length,
             (i) {
               return Padding(
-                padding: padding4,
+                padding: padding4All,
                 child: Column(
                   children: [
                     Text(

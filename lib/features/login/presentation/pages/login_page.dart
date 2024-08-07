@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:osrmtesting/core/theme/custom_theme.dart';
-import 'package:osrmtesting/core/theme/theme.dart';
+import 'package:osrmtesting/app/theme/custom_theme.dart';
+import 'package:osrmtesting/app/theme/theme.dart';
 import 'package:osrmtesting/core/utils/functions.dart';
 import 'package:osrmtesting/core/widgets/customx_widgets.dart';
 import 'package:osrmtesting/features/home/presentation/pages/home_page.dart';
@@ -142,11 +142,11 @@ class _ModalForgotPasswordState extends State<ModalForgotPassword> {
         padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: Padding(
-          padding: padding16,
+          padding: padding16All,
           child: Column(
             children: [
               Padding(
-                padding: padding8,
+                padding: padding8All,
                 child: Text(
                   forgotPassTitle,
                   style: text18b.copyWith(fontSize: 24),

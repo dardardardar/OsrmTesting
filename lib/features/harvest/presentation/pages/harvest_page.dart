@@ -6,8 +6,8 @@ import 'package:flutter_map_mbtiles/flutter_map_mbtiles.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:mbtiles/mbtiles.dart';
-import 'package:osrmtesting/core/theme/custom_theme.dart';
-import 'package:osrmtesting/core/theme/theme.dart';
+import 'package:osrmtesting/app/theme/custom_theme.dart';
+import 'package:osrmtesting/app/theme/theme.dart';
 import 'package:osrmtesting/core/widgets/customx_widgets.dart';
 import 'package:osrmtesting/features/harvest/presentation/cubit/map_layer/local/local_map_layer_cubit.dart';
 import 'package:osrmtesting/features/harvest/presentation/cubit/map_layer/local/local_map_layer_state.dart';
@@ -120,7 +120,7 @@ class _HarvestPageState extends State<HarvestPage> {
                                       children: [
                                         Center(
                                           child: Container(
-                                            padding: padding8,
+                                            padding: padding8All,
                                             child: Container(
                                               decoration: const ShapeDecoration(
                                                   shape: CircleBorder(),
@@ -147,7 +147,7 @@ class _HarvestPageState extends State<HarvestPage> {
                                           child: Align(
                                             alignment: Alignment.bottomCenter,
                                             child: Container(
-                                              padding: padding4,
+                                              padding: padding4All,
                                               decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(6),
@@ -212,13 +212,13 @@ class _HarvestPageState extends State<HarvestPage> {
                   );
                 }),
                 Padding(
-                  padding: padding16,
+                  padding: padding16All,
                   child: Column(
                     children: [
                       //debugPanel(_mbtiles!.getMetadata()),
                       const Spacer(),
                       Container(
-                        padding: padding8,
+                        padding: padding8All,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
                             boxShadow: const [
@@ -234,7 +234,7 @@ class _HarvestPageState extends State<HarvestPage> {
                           children: [
                             isNear ? treeDetail() : treeDetailNew(),
                             Padding(
-                              padding: padding8,
+                              padding: padding8All,
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
