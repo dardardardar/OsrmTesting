@@ -5,7 +5,7 @@ import 'package:osrmtesting/features/harvest/domain/repositories/map_layer_repos
 
 class GetTreeMarkersUseCase
     implements UseCase<BaseState<List<TreeMarkerEntity>>, void> {
-  final MapLayerRepository _treeMarkerRepository;
+  final IMapLayerRepository _treeMarkerRepository;
 
   GetTreeMarkersUseCase(this._treeMarkerRepository);
 

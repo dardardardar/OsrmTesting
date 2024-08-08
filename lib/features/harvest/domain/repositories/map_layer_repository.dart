@@ -3,7 +3,7 @@ import 'package:osrmtesting/core/resources/base_state.dart';
 import 'package:osrmtesting/features/harvest/domain/entities/tree_marker.dart';
 import 'package:flutter_map_geojson/flutter_map_geojson.dart';
 
-abstract class MapLayerRepository {
+abstract interface class IMapLayerRepository {
   Future<BaseState<List<TreeMarkerEntity>>> getTreeMarkers();
   Future<List<TreeMarkerEntity>> fetchCachedTreeMarkers();
   Future<void> purgeCachedTreeMarkers();

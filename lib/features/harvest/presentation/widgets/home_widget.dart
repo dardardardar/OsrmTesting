@@ -8,7 +8,7 @@ import 'package:mbtiles/mbtiles.dart';
 import 'package:osrmtesting/core/const/strings.dart';
 import 'package:osrmtesting/app/theme/custom_theme.dart';
 import 'package:osrmtesting/app/theme/theme.dart';
-import 'package:osrmtesting/core/utils/functions.dart';
+import 'package:osrmtesting/core/utils/helpers.dart';
 import 'package:osrmtesting/features/harvest/domain/entities/tree_marker.dart';
 
 Widget debugPanel(MbTilesMetadata metadata) {

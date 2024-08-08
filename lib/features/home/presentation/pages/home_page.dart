@@ -42,14 +42,15 @@ class _HomePageState extends State<HomePage> {
     BottomBarItemData(name: 'Harvest', iconPath: IconPath.naturePeople),
     BottomBarItemData(name: 'Maintenace', iconPath: IconPath.homeRepair),
     BottomBarItemData(name: 'Report', iconPath: IconPath.exportNotes),
-    BottomBarItemData(name: 'Profile', iconPath: IconPath.accoutCircle)
+    BottomBarItemData(name: 'Maintenace', iconPath: IconPath.homeRepair),
+    BottomBarItemData(name: 'Report', iconPath: IconPath.exportNotes),
+    BottomBarItemData(name: 'Report', iconPath: IconPath.exportNotes),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: CxStackContainer(
-      hideBottomBackground: true,
       bottomAppBar: BottomNavBar(
         items: items,
         ontap: _onItemTapped,
@@ -73,6 +74,12 @@ class _HomePageState extends State<HomePage> {
           ),
           Center(
             child: Text('5'),
+          ),
+          Center(
+            child: Text('6'),
+          ),
+          Center(
+            child: Text('7'),
           ),
         ],
       ),
@@ -118,8 +125,8 @@ class BottomNavBar extends StatelessWidget {
         padding: EdgeInsets.zero,
         mainAxisSpacing: 0,
         shrinkWrap: true,
-        itemCount: 5,
-        crossAxisCount: 5,
+        itemCount: items.length,
+        crossAxisCount: items.length,
         itemBuilder: (context, index) {
           return BottomBarItem(
             onTap: () {

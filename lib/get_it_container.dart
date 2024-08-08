@@ -17,9 +17,9 @@ Future<void> initGetIt() async {
   getIt.registerSingleton<AppDatabase>(db);
   getIt.registerSingleton<Dio>(Dio());
 
-  getIt.registerSingleton<MapLayerApiService>(MapLayerApiService(getIt()));
-  getIt.registerSingleton<MapLayerRepository>(
-      MapLayerRepositoryImpl(getIt(), getIt()));
+  getIt.registerSingleton<IMapLayerApiService>(IMapLayerApiService(getIt()));
+  getIt.registerSingleton<IMapLayerRepository>(
+      MapLayerRepository(getIt(), getIt()));
 
   getIt
       .registerSingleton<GetTreeMarkersUseCase>(GetTreeMarkersUseCase(getIt()));

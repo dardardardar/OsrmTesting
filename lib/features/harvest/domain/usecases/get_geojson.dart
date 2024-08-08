@@ -4,7 +4,7 @@ import 'package:osrmtesting/core/usecases/usecase.dart';
 import 'package:osrmtesting/features/harvest/domain/repositories/map_layer_repository.dart';
 
 class GetGeoJsonUseCase implements UseCase<BaseState<GeoJsonParser>, void> {
-  final MapLayerRepository _mapLayerRepository;
+  final IMapLayerRepository _mapLayerRepository;
 
   GetGeoJsonUseCase(this._mapLayerRepository);
 

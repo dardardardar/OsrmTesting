@@ -7,8 +7,8 @@ import 'package:retrofit/retrofit.dart';
 part 'map_layer_api_services.g.dart';
 
 @RestApi(baseUrl: baseURL)
-abstract class MapLayerApiService {
-  factory MapLayerApiService(Dio dio) = _MapLayerApiService;
+abstract interface class IMapLayerApiService {
+  factory IMapLayerApiService(Dio dio) = _IMapLayerApiService;
 
   @GET('/locations?type=1')
   Future<HttpResponse<List<TreeMarkerModel>>> getTreeMarkers();

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:mbtiles/mbtiles.dart';
 import 'package:osrmtesting/core/resources/base_state.dart';
-import 'package:osrmtesting/core/utils/functions.dart';
+import 'package:osrmtesting/core/utils/helpers.dart';
 import 'package:osrmtesting/features/harvest/data/data_sources/local/database.dart';
 import 'package:osrmtesting/features/harvest/data/data_sources/remote/map_layer_api_services.dart';
 import 'package:dio/dio.dart';
@@ -12,11 +12,11 @@ import 'package:flutter_map_geojson/flutter_map_geojson.dart';
 import 'package:osrmtesting/features/harvest/domain/entities/tree_marker.dart';
 import 'package:osrmtesting/features/harvest/domain/repositories/map_layer_repository.dart';
 
-class MapLayerRepositoryImpl implements MapLayerRepository {
-  final MapLayerApiService _mapLayerApiService;
+class MapLayerRepository implements IMapLayerRepository {
+  final IMapLayerApiService _mapLayerApiService;
   final AppDatabase _database;
 
-  MapLayerRepositoryImpl(this._mapLayerApiService, this._database);
+  MapLayerRepository(this._mapLayerApiService, this._database);
 
   @override
   Future<BaseState<List<TreeMarkerEntity>>> getTreeMarkers() async {

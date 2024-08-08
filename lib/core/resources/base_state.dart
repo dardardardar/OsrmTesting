@@ -12,7 +12,7 @@ class InitialState<T> extends BaseState<T> {
 }
 
 class SuccessState<T> extends BaseState<T> {
-  const SuccessState({required T data, String? message}) : super(data: data);
+  const SuccessState({T? data, String? message}) : super(data: data);
 }
 
 class HttpErrorState<T> extends BaseState<T> {

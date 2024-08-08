@@ -5,6 +5,7 @@ import 'package:osrmtesting/features/harvest/presentation/cubit/map_layer/local/
 import 'package:osrmtesting/features/harvest/presentation/cubit/map_layer/local/local_map_layer_event.dart';
 import 'package:osrmtesting/features/harvest/presentation/cubit/map_layer/remote/remote_map_layer_cubit.dart';
 import 'package:osrmtesting/features/harvest/presentation/cubit/map_layer/remote/remote_map_layer_event.dart';
+import 'package:osrmtesting/features/home/presentation/pages/home_page.dart';
 import 'package:osrmtesting/features/login/presentation/pages/login_page.dart';
 import 'package:osrmtesting/get_it_container.dart';
 
@@ -31,12 +32,10 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(useMaterial3: true, colorScheme: colorSchemes),
+        home: const HomePage(),
         // home: const LoginPage(
-        //   brand: 'Go-Harvest',
+        //   brand: 'Testing',
         // ),
-        home: const LoginPage(
-          brand: 'Testing',
-        ),
       ),
     );
   }
