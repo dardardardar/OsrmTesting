@@ -6,11 +6,11 @@ import 'package:osrmtesting/features/harvest/domain/usecases/get_tree_markers.da
 import 'package:osrmtesting/features/harvest/presentation/cubit/map_layer/remote/remote_map_layer_event.dart';
 import 'package:osrmtesting/features/harvest/presentation/cubit/map_layer/remote/remote_map_layer_state.dart';
 
-class RemoteMapLayerCubit
+class RemoteMapLayerBloc
     extends Bloc<RemoteMapLayerEvent, RemoteMapLayerState> {
   final GetTreeMarkersUseCase _getTreeMarkersUseCase;
 
-  RemoteMapLayerCubit(this._getTreeMarkersUseCase)
+  RemoteMapLayerBloc(this._getTreeMarkersUseCase)
       : super(const RemoteMapLayerLoading()) {
     on<GetRemoteMapLayer>(onGetTreeMarkers);
   }

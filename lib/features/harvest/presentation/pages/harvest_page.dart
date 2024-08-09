@@ -39,7 +39,7 @@ class _HarvestPageState extends State<HarvestPage> {
           style: text18b,
         ),
       ),
-      body: BlocBuilder<LocalMapLayerCubit, LocalMapLayerState>(
+      body: BlocBuilder<LocalMapLayerBloc, LocalMapLayerState>(
         builder: (context, state) {
           if (state is LocalMapLayerError) {
             return SizedBox(
@@ -54,7 +54,7 @@ class _HarvestPageState extends State<HarvestPage> {
             _polylines = state.polylines!;
             return Stack(
               children: [
-                BlocBuilder<RemoteMapLayerCubit, RemoteMapLayerState>(
+                BlocBuilder<RemoteMapLayerBloc, RemoteMapLayerState>(
                     builder: (context, state) {
                   if (state is RemoteMapLayerError) {
                     return SizedBox(

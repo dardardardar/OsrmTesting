@@ -6,6 +6,8 @@ import 'package:osrmtesting/features/harvest/presentation/cubit/map_layer/local/
 import 'package:osrmtesting/features/harvest/presentation/cubit/map_layer/remote/remote_map_layer_cubit.dart';
 import 'package:osrmtesting/features/harvest/presentation/cubit/map_layer/remote/remote_map_layer_event.dart';
 import 'package:osrmtesting/features/home/presentation/pages/home_page.dart';
+import 'package:osrmtesting/features/login/presentation/blocs/remote_login_bloc.dart';
+import 'package:osrmtesting/features/login/presentation/blocs/remote_login_event.dart';
 import 'package:osrmtesting/features/login/presentation/pages/login_page.dart';
 import 'package:osrmtesting/get_it_container.dart';
 
@@ -23,16 +25,21 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<RemoteMapLayerCubit>(
+        BlocProvider<RemoteMapLayerBloc>(
           create: (_) => getIt()..add(const GetRemoteMapLayer()),
         ),
-        BlocProvider<LocalMapLayerCubit>(
+        BlocProvider<LocalMapLayerBloc>(
           create: (_) => getIt()..add(const GetMapTiles()),
-        )
+        ),
+        BlocProvider<RemoteAuthBloc>(
+          create: (_) => getIt()..add(const FetchAccountData()),
+        ),
       ],
       child: MaterialApp(
         theme: ThemeData(useMaterial3: true, colorScheme: colorSchemes),
-        home: const HomePage(),
+        home: const LoginPage(
+          brand: 'test',
+        ),
         // home: const LoginPage(
         //   brand: 'Testing',
         // ),

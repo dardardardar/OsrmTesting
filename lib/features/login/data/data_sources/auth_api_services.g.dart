@@ -13,7 +13,7 @@ class _IAuthApiService implements IAuthApiService {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://sinarmas.tvindo.net/wp-json/sinar/v1/bum';
+    baseUrl ??= 'https://sinarmas.tvindo.net/wp-json/sinar/v1';
   }
 
   final Dio _dio;
@@ -74,7 +74,8 @@ class _IAuthApiService implements IAuthApiService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final _value = AccountDataModel.fromJson(_result.data!);
+    final response = _result.data!['data'];
+    final _value = AccountDataModel.fromJson(response[0]);
     final httpResponse = HttpResponse(_value, _result);
     return httpResponse;
   }

@@ -5,11 +5,11 @@ import 'package:osrmtesting/features/harvest/domain/usecases/get_mbtiles.dart';
 import 'package:osrmtesting/features/harvest/presentation/cubit/map_layer/local/local_map_layer_event.dart';
 import 'package:osrmtesting/features/harvest/presentation/cubit/map_layer/local/local_map_layer_state.dart';
 
-class LocalMapLayerCubit extends Bloc<LocalMapLayerEvent, LocalMapLayerState> {
+class LocalMapLayerBloc extends Bloc<LocalMapLayerEvent, LocalMapLayerState> {
   final GetMapTilesUseCase _getLocalMapLayer;
   final GetGeoJsonUseCase _geoJsonUseCase;
 
-  LocalMapLayerCubit(this._getLocalMapLayer, this._geoJsonUseCase)
+  LocalMapLayerBloc(this._getLocalMapLayer, this._geoJsonUseCase)
       : super(const LocalMapLayerLoading()) {
     on<GetMapTiles>(onLoadMapTiles);
   }

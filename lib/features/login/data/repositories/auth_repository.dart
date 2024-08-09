@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:osrmtesting/core/resources/base_state.dart';
 import 'package:osrmtesting/features/login/data/data_sources/auth_api_services.dart';
 import 'package:osrmtesting/features/login/data/model/auth_form.dart';
@@ -18,8 +19,10 @@ class AuthRepository implements IAuthRepository {
     try {
       final httpResponse =
           await _authApiService.login(AuthFormModel.formEntity(data).toJson());
+      const storage = FlutterSecureStorage();
       if (httpResponse.response.statusCode == HttpStatus.ok) {
-        return SuccessState(data: httpResponse.data);
+        await storage.write(key: 'token', value: httpResponse.data.jwt);
+        return const SuccessState(message: 'Saved');
       }
       return HttpErrorState(
           ex: DioException(
@@ -37,7 +40,10 @@ class AuthRepository implements IAuthRepository {
   @override
   Future<BaseState<AccountDataEntity>> fetchAccountData() async {
     try {
-      final httpResponse = await _authApiService.fetchAccountData('jwt');
+      const storage = FlutterSecureStorage();
+      final value = await storage.read(key: 'token');
+      final httpResponse = await _authApiService
+          .fetchAccountData(value != null ? 'Bearer $value' : '');
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return SuccessState(data: httpResponse.data);
       }

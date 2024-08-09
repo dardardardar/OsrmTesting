@@ -23,3 +23,7 @@ class HttpErrorState<T> extends BaseState<T> {
 class GeneralErrorState<T> extends BaseState<T> {
   const GeneralErrorState(Exception ex) : super(exception: ex);
 }
+
+class UnauthorizedState<T> extends BaseState<T> {
+  const UnauthorizedState(Exception ex) : super(exception: ex);
+}

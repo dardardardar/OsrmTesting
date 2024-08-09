@@ -269,7 +269,7 @@ class CxTextFormField extends StatefulWidget {
   final TextEditingController controller;
   final String? Function(String?)? validator;
   final Color? background;
-
+  final Function(String?)? onChanged;
   const CxTextFormField(
       {super.key,
       this.label,
@@ -277,7 +277,8 @@ class CxTextFormField extends StatefulWidget {
       required this.controller,
       this.validator,
       this.background,
-      this.inputType = CxInputType.text});
+      this.inputType = CxInputType.text,
+      this.onChanged});
 
   @override
   State<CxTextFormField> createState() => _CxTextFormFieldState();
@@ -315,6 +316,7 @@ class _CxTextFormFieldState extends State<CxTextFormField> {
         widget.label != null ? Text(widget.label!) : const Center(),
         spacer8h,
         TextFormField(
+          onChanged: widget.onChanged,
           obscureText:
               widget.inputType == CxInputType.password && !_passwordVisible
                   ? true
