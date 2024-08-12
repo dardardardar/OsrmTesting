@@ -7,8 +7,11 @@ import 'package:osrmtesting/core/utils/helpers.dart';
 import 'package:osrmtesting/core/widgets/customx_widgets.dart';
 import 'package:osrmtesting/features/home/presentation/pages/home_page.dart';
 import 'package:osrmtesting/features/login/domain/entities/auth_form.dart';
+import 'package:osrmtesting/features/login/presentation/blocs/fetch_account_data/fetch_account_data_bloc.dart';
+import 'package:osrmtesting/features/login/presentation/blocs/fetch_account_data/fetch_account_data_state.dart';
 import 'package:osrmtesting/features/login/presentation/blocs/remote_login_bloc.dart';
 import 'package:osrmtesting/features/login/presentation/blocs/remote_login_event.dart';
+import 'package:osrmtesting/features/login/presentation/blocs/remote_login_state.dart';
 import 'package:osrmtesting/features/login/presentation/pages/login_page_data.dart';
 import 'package:osrmtesting/get_it_container.dart';
 
@@ -27,20 +30,34 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailCtrl = TextEditingController();
   final TextEditingController _passCtrl = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  late RemoteAuthBloc bloc;
   String email = '';
   String pass = '';
+
+  @override
+  void didChangeDependencies() {
+    bloc = BlocProvider.of<RemoteAuthBloc>(context);
+    super.didChangeDependencies();
+  }
+
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
     _emailCtrl.dispose();
     _passCtrl.dispose();
+    bloc.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<RemoteAuthBloc>(),
+    return BlocListener<RemoteAccountDataBloc, RemoteAccountDataState>(
+      listener: (BuildContext context, RemoteAccountDataState state) {
+        if (state is RemoteAccountDataDone) {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => const HomePage()));
+        }
+      },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: CxStackContainer(
@@ -122,8 +139,8 @@ class _LoginPageState extends State<LoginPage> {
                             AuthFormEntity(email: email, password: pass);
                         // Navigator.of(context).push(MaterialPageRoute(
                         //     builder: (context) => const HomePage()));
-                        BlocProvider.of<RemoteAuthBloc>(context)
-                            .add(SendAuthData(formData));
+
+                        bloc.add(SendAuthData(formData: formData));
                       }
                     },
                     color: primaryColor,

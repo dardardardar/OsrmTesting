@@ -42,9 +42,6 @@ class _HomePageState extends State<HomePage> {
     BottomBarItemData(name: 'Harvest', iconPath: IconPath.naturePeople),
     BottomBarItemData(name: 'Maintenace', iconPath: IconPath.homeRepair),
     BottomBarItemData(name: 'Report', iconPath: IconPath.exportNotes),
-    BottomBarItemData(name: 'Maintenace', iconPath: IconPath.homeRepair),
-    BottomBarItemData(name: 'Report', iconPath: IconPath.exportNotes),
-    BottomBarItemData(name: 'Report', iconPath: IconPath.exportNotes),
   ];
 
   @override
@@ -71,15 +68,6 @@ class _HomePageState extends State<HomePage> {
           ),
           Center(
             child: Text('4'),
-          ),
-          Center(
-            child: Text('5'),
-          ),
-          Center(
-            child: Text('6'),
-          ),
-          Center(
-            child: Text('7'),
           ),
         ],
       ),

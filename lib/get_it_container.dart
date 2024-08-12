@@ -14,6 +14,7 @@ import 'package:osrmtesting/features/login/data/repositories/auth_repository.dar
 import 'package:osrmtesting/features/login/domain/repositories/auth_repository.dart';
 import 'package:osrmtesting/features/login/domain/usecases/fetch_account_data.dart';
 import 'package:osrmtesting/features/login/domain/usecases/login.dart';
+import 'package:osrmtesting/features/login/presentation/blocs/fetch_account_data/fetch_account_data_bloc.dart';
 import 'package:osrmtesting/features/login/presentation/blocs/remote_login_bloc.dart';
 
 final getIt = GetIt.instance;
@@ -56,7 +57,12 @@ Future<void> initGetIt() async {
   );
   getIt.registerFactory<RemoteAuthBloc>(
     () {
-      return RemoteAuthBloc(getIt(), getIt());
+      return RemoteAuthBloc(getIt());
+    },
+  );
+  getIt.registerFactory<RemoteAccountDataBloc>(
+    () {
+      return RemoteAccountDataBloc(getIt());
     },
   );
 }

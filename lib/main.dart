@@ -6,6 +6,9 @@ import 'package:osrmtesting/features/harvest/presentation/cubit/map_layer/local/
 import 'package:osrmtesting/features/harvest/presentation/cubit/map_layer/remote/remote_map_layer_cubit.dart';
 import 'package:osrmtesting/features/harvest/presentation/cubit/map_layer/remote/remote_map_layer_event.dart';
 import 'package:osrmtesting/features/home/presentation/pages/home_page.dart';
+import 'package:osrmtesting/features/login/presentation/blocs/fetch_account_data/fetch_account_data_bloc.dart';
+import 'package:osrmtesting/features/login/presentation/blocs/fetch_account_data/fetch_account_data_event.dart';
+import 'package:osrmtesting/features/login/presentation/blocs/fetch_account_data/fetch_account_data_state.dart';
 import 'package:osrmtesting/features/login/presentation/blocs/remote_login_bloc.dart';
 import 'package:osrmtesting/features/login/presentation/blocs/remote_login_event.dart';
 import 'package:osrmtesting/features/login/presentation/pages/login_page.dart';
@@ -32,13 +35,21 @@ class MyApp extends StatelessWidget {
           create: (_) => getIt()..add(const GetMapTiles()),
         ),
         BlocProvider<RemoteAuthBloc>(
+          create: (_) => getIt()..add(const SendAuthData()),
+        ),
+        BlocProvider<RemoteAccountDataBloc>(
           create: (_) => getIt()..add(const FetchAccountData()),
         ),
       ],
       child: MaterialApp(
         theme: ThemeData(useMaterial3: true, colorScheme: colorSchemes),
-        home: const LoginPage(
-          brand: 'test',
+        home: BlocBuilder<RemoteAccountDataBloc, RemoteAccountDataState>(
+          builder: (context, state) {
+            if (state is RemoteAccountDataError) {
+              return const LoginPage(brand: 'eee');
+            }
+            return const HomePage();
+          },
         ),
         // home: const LoginPage(
         //   brand: 'Testing',

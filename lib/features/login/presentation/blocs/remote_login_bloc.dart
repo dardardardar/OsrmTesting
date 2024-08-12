@@ -7,26 +7,19 @@ import 'package:osrmtesting/features/login/presentation/blocs/remote_login_state
 
 class RemoteAuthBloc extends Bloc<RemoteAuthEvent, RemoteAuthState> {
   final SendAuthDataUseCase _sendAuthDataUseCase;
-  final FetchAccountDataUseCase _fetchAccountDataUseCase;
-  RemoteAuthBloc(this._sendAuthDataUseCase, this._fetchAccountDataUseCase)
-      : super(const RemoteAuthLoading()) {
+  RemoteAuthBloc(this._sendAuthDataUseCase) : super(const RemoteAuthLoading()) {
     on<SendAuthData>(onSendAuthData);
-    on<FetchAccountData>(onFetchRemoteData);
   }
 
   void onSendAuthData(
       SendAuthData sendAuthData, Emitter<RemoteAuthState> emit) async {
-    await _sendAuthDataUseCase(params: sendAuthData.formData);
-    final data = await _fetchAccountDataUseCase();
+    final data = await _sendAuthDataUseCase(params: sendAuthData.formData);
     if (data is SuccessState) {
-      emit(RemoteAuthDone(data: data.data!));
+      emit(const RemoteAuthDone());
     }
 
     if (data is GeneralErrorState) {
       emit(RemoteAuthError(data.dioException!));
     }
   }
-
-  void onFetchRemoteData(
-      FetchAccountData sendAuthData, Emitter<RemoteAuthState> emit) async {}
 }

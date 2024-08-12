@@ -1,15 +1,15 @@
 import 'package:equatable/equatable.dart';
 import 'package:osrmtesting/features/login/domain/entities/auth_form.dart';
 
-abstract class RemoteAuthEvent extends Equatable {
+abstract class RemoteAccountDataEvent extends Equatable {
   final AuthFormEntity? formData;
 
-  const RemoteAuthEvent({this.formData});
+  const RemoteAccountDataEvent({this.formData});
 
   @override
   List<Object> get props => [formData!];
 }
 
-class SendAuthData extends RemoteAuthEvent {
-  const SendAuthData({AuthFormEntity? formData});
+class FetchAccountData extends RemoteAccountDataEvent {
+  const FetchAccountData();
 }

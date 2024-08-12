@@ -1,15 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
-import 'package:osrmtesting/features/login/domain/entities/account_data.dart';
 
 abstract class RemoteAuthState extends Equatable {
-  final AccountDataEntity? userData;
   final DioException? error;
 
-  const RemoteAuthState({this.userData, this.error});
+  const RemoteAuthState({this.error});
 
   @override
-  List<Object> get props => [userData!, error!];
+  List<Object> get props => [error!];
 }
 
 class RemoteAuthLoading extends RemoteAuthState {
@@ -17,8 +15,7 @@ class RemoteAuthLoading extends RemoteAuthState {
 }
 
 class RemoteAuthDone extends RemoteAuthState {
-  const RemoteAuthDone({required AccountDataEntity data})
-      : super(userData: data);
+  const RemoteAuthDone();
 }
 
 class RemoteAuthError extends RemoteAuthState {
