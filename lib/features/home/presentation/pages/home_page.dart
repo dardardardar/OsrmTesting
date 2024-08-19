@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:osrmtesting/app/theme/custom_theme.dart';
 import 'package:osrmtesting/app/theme/theme.dart';
 import 'package:osrmtesting/core/widgets/customx_widgets.dart';
+import 'package:osrmtesting/features/login/presentation/blocs/fetch_account_data/fetch_account_data_bloc.dart';
+import 'package:osrmtesting/features/login/presentation/blocs/fetch_account_data/fetch_account_data_event.dart';
+import 'package:osrmtesting/features/login/presentation/pages/login_page.dart';
 
 class BottomBarItemData {
   final String name;
@@ -25,15 +29,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final PageController _pageController = PageController();
   int _selectedIndex = 0;
+  late RemoteAccountDataBloc bloc;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    bloc = BlocProvider.of<RemoteAccountDataBloc>(context);
+    super.didChangeDependencies();
   }
 
   @override
   void dispose() {
     _pageController.dispose();
+    bloc.close();
     super.dispose();
   }
 
@@ -58,7 +65,16 @@ class _HomePageState extends State<HomePage> {
         physics: NeverScrollableScrollPhysics(),
         children: [
           Center(
-            child: Text('1'),
+            child: ElevatedButton(
+              onPressed: () {
+                bloc.add(const Logout());
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const LoginPage(
+                          brand: 'weee',
+                        )));
+              },
+              child: Text('Logout'),
+            ),
           ),
           Center(
             child: Text('2'),

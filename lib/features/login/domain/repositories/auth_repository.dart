@@ -7,4 +7,5 @@ abstract interface class IAuthRepository {
 
   Future<BaseState> login(AuthFormEntity data);
   Future<BaseState<AccountDataEntity>> fetchAccountData();
+  Future<BaseState> logout();
 }

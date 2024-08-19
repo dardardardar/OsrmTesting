@@ -17,10 +17,18 @@ class RemoteAccountDataLoading extends RemoteAccountDataState {
 }
 
 class RemoteAccountDataDone extends RemoteAccountDataState {
-  const RemoteAccountDataDone({required AccountDataEntity data})
+  const RemoteAccountDataDone({AccountDataEntity? data})
       : super(userData: data);
 }
 
 class RemoteAccountDataError extends RemoteAccountDataState {
   const RemoteAccountDataError(DioException error) : super(error: error);
+}
+
+class RemoteAccountGeneralError extends RemoteAccountDataState {
+  const RemoteAccountGeneralError(Exception error);
+}
+
+class RemoteAccountDataUnauthorized extends RemoteAccountDataState {
+  const RemoteAccountDataUnauthorized();
 }

@@ -24,6 +24,12 @@ class AuthRepository implements IAuthRepository {
         await storage.write(key: 'token', value: httpResponse.data.jwt);
         return const SuccessState(message: 'Saved');
       }
+      if (httpResponse.response.statusCode == HttpStatus.badRequest) {
+        return InvalidCredentialState(DioException(
+            error: httpResponse.response.statusMessage,
+            response: httpResponse.response,
+            requestOptions: httpResponse.response.requestOptions));
+      }
       return HttpErrorState(
           ex: DioException(
               error: httpResponse.response.statusMessage,
@@ -47,6 +53,12 @@ class AuthRepository implements IAuthRepository {
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return SuccessState(data: httpResponse.data);
       }
+      if (httpResponse.response.statusCode == HttpStatus.forbidden) {
+        return UnauthorizedState(DioException(
+            error: httpResponse.response.statusMessage,
+            response: httpResponse.response,
+            requestOptions: httpResponse.response.requestOptions));
+      }
       return HttpErrorState(
           ex: DioException(
               error: httpResponse.response.statusMessage,
@@ -55,6 +67,17 @@ class AuthRepository implements IAuthRepository {
               requestOptions: httpResponse.response.requestOptions));
     } on DioException catch (e) {
       return HttpErrorState(ex: e);
+    } on Exception catch (e) {
+      return GeneralErrorState(e);
+    }
+  }
+
+  @override
+  Future<BaseState> logout() async {
+    try {
+      const storage = FlutterSecureStorage();
+      await storage.delete(key: 'token');
+      return const SuccessState(message: 'done');
     } on Exception catch (e) {
       return GeneralErrorState(e);
     }

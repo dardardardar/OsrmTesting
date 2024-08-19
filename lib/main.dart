@@ -9,8 +9,8 @@ import 'package:osrmtesting/features/home/presentation/pages/home_page.dart';
 import 'package:osrmtesting/features/login/presentation/blocs/fetch_account_data/fetch_account_data_bloc.dart';
 import 'package:osrmtesting/features/login/presentation/blocs/fetch_account_data/fetch_account_data_event.dart';
 import 'package:osrmtesting/features/login/presentation/blocs/fetch_account_data/fetch_account_data_state.dart';
-import 'package:osrmtesting/features/login/presentation/blocs/remote_login_bloc.dart';
-import 'package:osrmtesting/features/login/presentation/blocs/remote_login_event.dart';
+import 'package:osrmtesting/features/login/presentation/blocs/send_auth_data/send_auth_data_bloc.dart';
+import 'package:osrmtesting/features/login/presentation/blocs/send_auth_data/send_auth_data_event.dart';
 import 'package:osrmtesting/features/login/presentation/pages/login_page.dart';
 import 'package:osrmtesting/get_it_container.dart';
 
@@ -40,12 +40,15 @@ class MyApp extends StatelessWidget {
         BlocProvider<RemoteAccountDataBloc>(
           create: (_) => getIt()..add(const FetchAccountData()),
         ),
+        BlocProvider<RemoteAccountDataBloc>(
+          create: (_) => getIt()..add(const Logout()),
+        ),
       ],
       child: MaterialApp(
         theme: ThemeData(useMaterial3: true, colorScheme: colorSchemes),
         home: BlocBuilder<RemoteAccountDataBloc, RemoteAccountDataState>(
           builder: (context, state) {
-            if (state is RemoteAccountDataError) {
+            if (state is RemoteAccountDataUnauthorized) {
               return const LoginPage(brand: 'eee');
             }
             return const HomePage();

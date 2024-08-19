@@ -13,3 +13,7 @@ abstract class RemoteAccountDataEvent extends Equatable {
 class FetchAccountData extends RemoteAccountDataEvent {
   const FetchAccountData();
 }
+
+class Logout extends RemoteAccountDataEvent {
+  const Logout();
+}

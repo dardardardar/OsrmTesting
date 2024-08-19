@@ -2,8 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:osrmtesting/core/resources/base_state.dart';
 import 'package:osrmtesting/features/login/domain/usecases/fetch_account_data.dart';
 import 'package:osrmtesting/features/login/domain/usecases/login.dart';
-import 'package:osrmtesting/features/login/presentation/blocs/remote_login_event.dart';
-import 'package:osrmtesting/features/login/presentation/blocs/remote_login_state.dart';
+import 'package:osrmtesting/features/login/presentation/blocs/send_auth_data/send_auth_data_event.dart';
+import 'package:osrmtesting/features/login/presentation/blocs/send_auth_data/send_auth_data_state.dart';
 
 class RemoteAuthBloc extends Bloc<RemoteAuthEvent, RemoteAuthState> {
   final SendAuthDataUseCase _sendAuthDataUseCase;

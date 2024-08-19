@@ -27,3 +27,7 @@ class GeneralErrorState<T> extends BaseState<T> {
 class UnauthorizedState<T> extends BaseState<T> {
   const UnauthorizedState(Exception ex) : super(exception: ex);
 }
+
+class InvalidCredentialState<T> extends BaseState<T> {
+  const InvalidCredentialState(Exception ex) : super(exception: ex);
+}

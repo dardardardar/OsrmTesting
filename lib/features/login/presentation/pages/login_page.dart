@@ -9,9 +9,9 @@ import 'package:osrmtesting/features/home/presentation/pages/home_page.dart';
 import 'package:osrmtesting/features/login/domain/entities/auth_form.dart';
 import 'package:osrmtesting/features/login/presentation/blocs/fetch_account_data/fetch_account_data_bloc.dart';
 import 'package:osrmtesting/features/login/presentation/blocs/fetch_account_data/fetch_account_data_state.dart';
-import 'package:osrmtesting/features/login/presentation/blocs/remote_login_bloc.dart';
-import 'package:osrmtesting/features/login/presentation/blocs/remote_login_event.dart';
-import 'package:osrmtesting/features/login/presentation/blocs/remote_login_state.dart';
+import 'package:osrmtesting/features/login/presentation/blocs/send_auth_data/send_auth_data_bloc.dart';
+import 'package:osrmtesting/features/login/presentation/blocs/send_auth_data/send_auth_data_event.dart';
+import 'package:osrmtesting/features/login/presentation/blocs/send_auth_data/send_auth_data_state.dart';
 import 'package:osrmtesting/features/login/presentation/pages/login_page_data.dart';
 import 'package:osrmtesting/get_it_container.dart';
 
@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
     // Clean up the controller when the widget is disposed.
     _emailCtrl.dispose();
     _passCtrl.dispose();
-    bloc.close();
+
     super.dispose();
   }
 
