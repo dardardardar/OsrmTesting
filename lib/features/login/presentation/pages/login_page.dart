@@ -45,7 +45,6 @@ class _LoginPageState extends State<LoginPage> {
     // Clean up the controller when the widget is disposed.
     _emailCtrl.dispose();
     _passCtrl.dispose();
-
     super.dispose();
   }
 
